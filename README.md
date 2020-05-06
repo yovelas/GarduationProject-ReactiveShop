@@ -1,9 +1,5 @@
 # 数据库
 
-## 商品相关
-
-
-
 -- 管理员信息表
 CREATE TABLE admin(
 admin_id int PRIMARY KEY AUTO_INCREMENT COMMENT '管理员ID',
