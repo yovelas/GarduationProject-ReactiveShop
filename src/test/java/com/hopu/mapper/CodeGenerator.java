@@ -1,4 +1,4 @@
-package com.cyt.cytcrm.mapper;
+package com.hopu.mapper;
 
 import com.baomidou.mybatisplus.core.exceptions.MybatisPlusException;
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
@@ -53,7 +53,7 @@ public class CodeGenerator {
 
         // 数据源配置
         DataSourceConfig dsc = new DataSourceConfig();
-        dsc.setUrl("jdbc:mysql://localhost:3306/cyt_crm?useUnicode=true&useSSL=false&characterEncoding=utf8");
+        dsc.setUrl("jdbc:mysql://localhost:3306/shop?serverTimezone=UTC&useUnicode=true&useSSL=false&characterEncoding=utf8");
         dsc.setDriverName("com.mysql.jdbc.Driver");
         dsc.setUsername("root");
         dsc.setPassword("root");
@@ -62,7 +62,7 @@ public class CodeGenerator {
         // 包配置
         final PackageConfig pc = new PackageConfig();
         // pc.setModuleName(scanner("模块名"));
-        pc.setParent("com.cyt.cytcrm");
+        pc.setParent("com.hopu");
         mpg.setPackageInfo(pc);
 
         // 自定义配置

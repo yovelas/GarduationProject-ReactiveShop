@@ -1,4 +1,4 @@
-package com.cyt.cytcrm.utils;
+package com.hopu.utils;
 
 import org.apache.shiro.crypto.SecureRandomNumberGenerator;
 import org.apache.shiro.crypto.hash.Md5Hash;

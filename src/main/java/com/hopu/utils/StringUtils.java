@@ -1,4 +1,4 @@
-package com.cyt.cytcrm.utils;
+package com.hopu.utils;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
