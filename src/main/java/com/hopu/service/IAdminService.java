@@ -22,7 +22,7 @@ public interface IAdminService extends IService<Admin> {
     Integer add(Admin admin);
 
 
-    Integer update(Admin admin);
+    Integer update(Admin admin,Integer adminId);
 
 
 }

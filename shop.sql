@@ -1,83 +1,189 @@
+/*
+Navicat MySQL Data Transfer
 
--- 管理员信息表
-CREATE TABLE admin(
-admin_id int PRIMARY KEY AUTO_INCREMENT COMMENT '管理员ID',
-admin_name VARCHAR(50) not null COMMENT '管理员姓名',
-admin_pwd VARCHAR(50) not null COMMENT '管理员密码'
-);
+Source Server         : MySQL
+Source Server Version : 50638
+Source Host           : localhost:3306
+Source Database       : shop
 
-INSERT INTO admin VALUES(null,"admin","123456");
+Target Server Type    : MYSQL
+Target Server Version : 50638
+File Encoding         : 65001
 
+Date: 2020-05-07 21:31:38
+*/
 
--- 用户信息表
-CREATE TABLE users(
-users_id int PRIMARY KEY AUTO_INCREMENT COMMENT '用户ID',
-users_name VARCHAR(50) not null COMMENT '用户名',
-users_pwd VARCHAR(50) not null COMMENT '用户密码'
-);
+SET FOREIGN_KEY_CHECKS=0;
 
-INSERT INTO users VALUES(null,"张三","123456");
--- 商品类型
-CREATE TABLE goodstype(
-goodstype_id int PRIMARY KEY AUTO_INCREMENT COMMENT '类型ID',
-goodstype_name VARCHAR(50) not null COMMENT '商品类型'
-);
+-- ----------------------------
+-- Table structure for admin
+-- ----------------------------
+DROP TABLE IF EXISTS `admin`;
+CREATE TABLE `admin` (
+  `admin_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '管理员ID',
+  `admin_name` varchar(50) NOT NULL COMMENT '管理员姓名',
+  `admin_pwd` varchar(50) NOT NULL COMMENT '管理员密码',
+  `salt` varchar(255) NOT NULL,
+  `create_time` datetime NOT NULL COMMENT '创建时间',
+  `update_time` datetime NOT NULL COMMENT '更新时间',
+  `is_del` int(11) NOT NULL COMMENT '是否删除',
+  PRIMARY KEY (`admin_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
+-- ----------------------------
+-- Records of admin
+-- ----------------------------
+INSERT INTO `admin` VALUES ('1', 'admin', '123456', '123456', '2020-05-07 20:51:57', '2020-05-07 20:52:01', '0');
+INSERT INTO `admin` VALUES ('2', 'gg', 'b10355dd3af5d7686a7f8d22f5ccc3e4', '3dc699762a33', '2020-05-07 21:00:14', '2020-05-07 21:20:11', '0');
+INSERT INTO `admin` VALUES ('3', 'aa', '5a16fcfd779daa012483463855b6da57', 'be8355b78d53', '2020-05-07 21:08:57', '2020-05-07 21:08:57', '0');
 
--- 商品信息
+-- ----------------------------
+-- Table structure for focus
+-- ----------------------------
+DROP TABLE IF EXISTS `focus`;
+CREATE TABLE `focus` (
+  `focus_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `users_id` int(11) NOT NULL COMMENT '用户ID',
+  `goods_id` int(11) NOT NULL COMMENT '商品ID',
+  `focus_time` datetime NOT NULL COMMENT '关注时间',
+  `create_time` datetime NOT NULL COMMENT '创建时间',
+  `update_time` datetime NOT NULL COMMENT '更新时间',
+  `is_del` int(11) NOT NULL COMMENT '是否删除',
+  PRIMARY KEY (`focus_id`),
+  KEY `users_id` (`users_id`),
+  KEY `goods_id` (`goods_id`),
+  CONSTRAINT `focus_ibfk_1` FOREIGN KEY (`users_id`) REFERENCES `users` (`users_id`),
+  CONSTRAINT `focus_ibfk_2` FOREIGN KEY (`goods_id`) REFERENCES `goods` (`goods_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE goods(
-goods_id int PRIMARY KEY AUTO_INCREMENT COMMENT '商品ID',
-goods_name VARCHAR(50) not null COMMENT '商品名',
-goods_oprice DOUBLE not null COMMENT '原价',
-goods_price DOUBLE not null COMMENT '现价',
-goods_store int not null COMMENT '库存',
-goods_picture VARCHAR(50) COMMENT '图片',
-goods_describe VARCHAR(255) COMMENT '商品描述',
-goodstype_id int not null COMMENT '类型ID',
-FOREIGN KEY(goodstype_id) REFERENCES goodstype(goodstype_id)
-);
+-- ----------------------------
+-- Records of focus
+-- ----------------------------
 
--- 购物车
-CREATE TABLE shopping(
-shopping_id int PRIMARY KEY AUTO_INCREMENT COMMENT '购物车ID',
-users_id int not null COMMENT '用户ID',
-goods_id  int not null COMMENT '商品ID',
-shoppingnum int not null COMMENT '购买数量',
-FOREIGN KEY(users_id) REFERENCES users(users_id),
-FOREIGN KEY(goods_id) REFERENCES goods(goods_id)
-);
+-- ----------------------------
+-- Table structure for goods
+-- ----------------------------
+DROP TABLE IF EXISTS `goods`;
+CREATE TABLE `goods` (
+  `goods_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '商品ID',
+  `goods_name` varchar(50) NOT NULL COMMENT '商品名',
+  `goods_oprice` double NOT NULL COMMENT '原价',
+  `goods_price` double NOT NULL COMMENT '现价',
+  `goods_store` int(11) NOT NULL COMMENT '库存',
+  `goods_picture` varchar(50) DEFAULT NULL COMMENT '图片',
+  `goods_describe` varchar(255) DEFAULT NULL COMMENT '商品描述',
+  `goodstype_id` int(11) NOT NULL COMMENT '类型ID',
+  `create_time` datetime NOT NULL COMMENT '创建时间',
+  `update_time` datetime NOT NULL COMMENT '更新时间',
+  `is_del` int(11) NOT NULL COMMENT '是否删除',
+  PRIMARY KEY (`goods_id`),
+  KEY `goodstype_id` (`goodstype_id`),
+  CONSTRAINT `goods_ibfk_1` FOREIGN KEY (`goodstype_id`) REFERENCES `goodstype` (`goodstype_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+-- ----------------------------
+-- Records of goods
+-- ----------------------------
 
--- 关注表
-CREATE TABLE focus(
-focus_id int PRIMARY KEY AUTO_INCREMENT COMMENT 'ID',
-users_id int not null COMMENT '用户ID',
-goods_id  int not null COMMENT '商品ID',
-focus_time datetime not null COMMENT '关注时间',
-FOREIGN KEY(users_id) REFERENCES users(users_id),
-FOREIGN KEY(goods_id) REFERENCES goods(goods_id)
-);
+-- ----------------------------
+-- Table structure for goodstype
+-- ----------------------------
+DROP TABLE IF EXISTS `goodstype`;
+CREATE TABLE `goodstype` (
+  `goodstype_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '类型ID',
+  `goodstype_name` varchar(50) NOT NULL COMMENT '商品类型',
+  `create_time` datetime NOT NULL COMMENT '创建时间',
+  `update_time` datetime NOT NULL COMMENT '更新时间',
+  `is_del` int(11) NOT NULL COMMENT '是否删除',
+  PRIMARY KEY (`goodstype_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- 订单基础表
-CREATE TABLE orderbasis(
-orderbasis_id int PRIMARY KEY AUTO_INCREMENT COMMENT '订单ID',
-users_id int not null COMMENT '用户ID',
-amount DOUBLE not null COMMENT '金额',
-status int not null COMMENT '状态',
-orderdate datetime not null COMMENT '下单时间',
-FOREIGN KEY(users_id) REFERENCES users(users_id),
-);
+-- ----------------------------
+-- Records of goodstype
+-- ----------------------------
 
--- 订单详情表
-CREATE TABLE orders(
-orders_id int PRIMARY KEY AUTO_INCREMENT COMMENT 'ID',
-orderbasis_id int not NULL COMMENT '订单ID',
-goods_id  int not null COMMENT '商品ID',
-shoppingnum int not null COMMENT '购买数量',
-FOREIGN KEY(goods_id) REFERENCES goods(goods_id),
-FOREIGN KEY(orderbasis_id) REFERENCES orderbasis(orderbasis_id)
-);
+-- ----------------------------
+-- Table structure for orderbasis
+-- ----------------------------
+DROP TABLE IF EXISTS `orderbasis`;
+CREATE TABLE `orderbasis` (
+  `orderbasis_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '订单ID',
+  `users_id` int(11) NOT NULL COMMENT '用户ID',
+  `amount` double NOT NULL COMMENT '金额',
+  `status` int(11) NOT NULL COMMENT '状态',
+  `orderdate` datetime NOT NULL COMMENT '下单时间',
+  `create_time` datetime NOT NULL COMMENT '创建时间',
+  `update_time` datetime NOT NULL COMMENT '更新时间',
+  `is_del` int(11) NOT NULL COMMENT '是否删除',
+  PRIMARY KEY (`orderbasis_id`),
+  KEY `users_id` (`users_id`),
+  CONSTRAINT `orderbasis_ibfk_1` FOREIGN KEY (`users_id`) REFERENCES `users` (`users_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+-- ----------------------------
+-- Records of orderbasis
+-- ----------------------------
 
+-- ----------------------------
+-- Table structure for orders
+-- ----------------------------
+DROP TABLE IF EXISTS `orders`;
+CREATE TABLE `orders` (
+  `orders_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `orderbasis_id` int(11) NOT NULL COMMENT '订单ID',
+  `goods_id` int(11) NOT NULL COMMENT '商品ID',
+  `shoppingnum` int(11) NOT NULL COMMENT '购买数量',
+  `create_time` datetime NOT NULL COMMENT '创建时间',
+  `update_time` datetime NOT NULL COMMENT '更新时间',
+  `is_del` int(11) NOT NULL COMMENT '是否删除',
+  PRIMARY KEY (`orders_id`),
+  KEY `goods_id` (`goods_id`),
+  KEY `orderbasis_id` (`orderbasis_id`),
+  CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`goods_id`) REFERENCES `goods` (`goods_id`),
+  CONSTRAINT `orders_ibfk_2` FOREIGN KEY (`orderbasis_id`) REFERENCES `orderbasis` (`orderbasis_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+-- ----------------------------
+-- Records of orders
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for shopping
+-- ----------------------------
+DROP TABLE IF EXISTS `shopping`;
+CREATE TABLE `shopping` (
+  `shopping_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '购物车ID',
+  `users_id` int(11) NOT NULL COMMENT '用户ID',
+  `goods_id` int(11) NOT NULL COMMENT '商品ID',
+  `shoppingnum` int(11) NOT NULL COMMENT '购买数量',
+  `create_time` datetime NOT NULL COMMENT '创建时间',
+  `update_time` datetime NOT NULL COMMENT '更新时间',
+  `is_del` int(11) NOT NULL COMMENT '是否删除',
+  PRIMARY KEY (`shopping_id`),
+  KEY `users_id` (`users_id`),
+  KEY `goods_id` (`goods_id`),
+  CONSTRAINT `shopping_ibfk_1` FOREIGN KEY (`users_id`) REFERENCES `users` (`users_id`),
+  CONSTRAINT `shopping_ibfk_2` FOREIGN KEY (`goods_id`) REFERENCES `goods` (`goods_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of shopping
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for users
+-- ----------------------------
+DROP TABLE IF EXISTS `users`;
+CREATE TABLE `users` (
+  `users_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '用户ID',
+  `users_name` varchar(50) NOT NULL COMMENT '用户名',
+  `users_pwd` varchar(50) NOT NULL COMMENT '用户密码',
+  `create_time` datetime NOT NULL COMMENT '创建时间',
+  `update_time` datetime NOT NULL COMMENT '更新时间',
+  `is_del` int(11) NOT NULL COMMENT '是否删除',
+  PRIMARY KEY (`users_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of users
+-- ----------------------------

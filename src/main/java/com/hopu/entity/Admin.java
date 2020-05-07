@@ -21,7 +21,7 @@ import lombok.experimental.Accessors;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Admin implements Serializable {
+public class Admin extends BaseEntity  {
 
     /**
      * 管理员ID

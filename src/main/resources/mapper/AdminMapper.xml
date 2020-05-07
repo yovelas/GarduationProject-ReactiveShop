@@ -12,7 +12,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        select distinct admin_id, admin_name, admin_pwd, salt from admin
+        select distinct admin_id, admin_name, admin_pwd,salt,create_time,update_time,is_del from admin
     </sql>
 
     <select id="selectList" resultMap="AdminResult">

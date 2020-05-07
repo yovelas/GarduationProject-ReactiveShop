@@ -32,6 +32,7 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
         return mapper.selectList(page);
     }
 
+
     @Override
     public Admin selectByName(String adminName) {
         return mapper.selectByName(adminName);
@@ -44,6 +45,10 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
         admin.setSalt(ShiroUtils.randomSalt());
         //将密码设置为 加密后的密码（由ShiroUtils里面encryptPassword方法实现）
         admin.setAdminPwd(ShiroUtils.encryptPassword(admin.getAdminPwd(), admin.getCredentialsSalt()));
+       //设置时间，idDel
+        admin.setCreateTime(StringUtils.getNowTime());
+        admin.setUpdateTime(admin.getCreateTime());  //获取创建时间，可以提高一点性能
+        admin.setIsDel(0);
 
         int result = mapper.insert(admin);
 
@@ -53,7 +58,7 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
 
 
     @Override
-    public Integer update(Admin admin) {
+    public Integer update(Admin admin,Integer adminId) {
 
         //判断是否输入密码，如果没有，获取的就是空字符串 ("")  就不修改密码
         if (!"".equals(admin.getAdminPwd())) {
@@ -64,7 +69,8 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
         } else {
             admin.setAdminPwd(null);
         }
-
+       //设置时间
+        admin.setUpdateTime(StringUtils.getNowTime());
         //将信息更新到数据库中（空的属性不修改）
         int result = mapper.updateById(admin);
 
