@@ -1,14 +1,11 @@
 package com.hopu.service.impl;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+
 import com.hopu.entity.Admin;
 import com.hopu.mapper.AdminMapper;
 import com.hopu.service.IAdminService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.hopu.utils.ShiroUtils;
-import com.hopu.utils.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Service;
 
 /**
