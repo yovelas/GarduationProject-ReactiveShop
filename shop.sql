@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50638
 File Encoding         : 65001
 
-Date: 2020-05-07 21:31:38
+Date: 2020-05-08 17:19:35
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -178,12 +178,16 @@ CREATE TABLE `users` (
   `users_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '用户ID',
   `users_name` varchar(50) NOT NULL COMMENT '用户名',
   `users_pwd` varchar(50) NOT NULL COMMENT '用户密码',
+  `salt` varchar(255) NOT NULL,
   `create_time` datetime NOT NULL COMMENT '创建时间',
   `update_time` datetime NOT NULL COMMENT '更新时间',
   `is_del` int(11) NOT NULL COMMENT '是否删除',
   PRIMARY KEY (`users_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of users
 -- ----------------------------
+INSERT INTO `users` VALUES ('1', 'aa', '123456', '123456', '2020-05-08 09:57:11', '2020-05-08 09:57:15', '0');
+INSERT INTO `users` VALUES ('2', 'bb', 'fa119d805e9b12b7f9e57d0921408bad', '33cbf2763aae', '2020-05-08 10:28:59', '2020-05-08 10:28:59', '0');
+INSERT INTO `users` VALUES ('3', 'gg', 'a0220ac5aa4d4920327425290ca09779', '1dc6ed3874c3', '2020-05-08 09:57:11', '2020-05-08 10:46:14', '0');
