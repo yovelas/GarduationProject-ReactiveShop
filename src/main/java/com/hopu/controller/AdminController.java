@@ -45,7 +45,7 @@ public class AdminController {
     }
 
     /**
-     *  新增用户
+     *  新增管理员
      */
     @PostMapping("/admin")
     public Map add(Admin admin){
@@ -55,7 +55,7 @@ public class AdminController {
     }
 
     /**
-     *  删除用户
+     *  删除管理员
      */
     @DeleteMapping("/admin/del/{AdminId}")
     public Map del(@PathVariable Integer AdminId){
@@ -68,7 +68,7 @@ public class AdminController {
     }
 
     /**
-     *  修改用户
+     *  修改管理员信息
      */
     @PutMapping("/admin")
     public Map edit(Admin admin,Integer adminId){

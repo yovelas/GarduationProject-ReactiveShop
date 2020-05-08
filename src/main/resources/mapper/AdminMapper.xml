@@ -8,6 +8,9 @@
         <result column="admin_name" property="adminName" />
         <result column="admin_pwd" property="adminPwd" />
         <result column="salt" property="salt" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+        <result column="is_del" property="isDel" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
