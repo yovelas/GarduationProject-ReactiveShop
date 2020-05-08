@@ -3,14 +3,25 @@
 <mapper namespace="com.hopu.mapper.GoodstypeMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.hopu.entity.Goodstype">
+    <resultMap id="GoodstypeResult" type="com.hopu.entity.Goodstype">
         <id column="goodstype_id" property="goodstypeId" />
         <result column="goodstype_name" property="goodstypeName" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+        <result column="is_del" property="isDel" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        goodstype_id, goodstype_name
+       select distinct goodstype_id, goodstype_name,create_time,update_time,is_del from goodstype
     </sql>
 
+    <select id="selectList" resultMap="GoodstypeResult">
+        <include refid="Base_Column_List" />
+    </select>
+
+    <select id="selectByName" parameterType="String" resultMap="GoodstypeResult">
+        <include refid="Base_Column_List" />
+        where goodstype_name = #{goodstypeName}
+    </select>
 </mapper>
