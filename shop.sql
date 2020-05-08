@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50638
 File Encoding         : 65001
 
-Date: 2020-05-08 17:19:35
+Date: 2020-05-08 21:21:01
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -96,11 +96,14 @@ CREATE TABLE `goodstype` (
   `update_time` datetime NOT NULL COMMENT '更新时间',
   `is_del` int(11) NOT NULL COMMENT '是否删除',
   PRIMARY KEY (`goodstype_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of goodstype
 -- ----------------------------
+INSERT INTO `goodstype` VALUES ('1', '服饰', '2020-05-08 17:38:06', '2020-05-08 17:38:09', '0');
+INSERT INTO `goodstype` VALUES ('2', '家具', '2020-05-08 17:38:36', '2020-05-08 17:38:38', '0');
+INSERT INTO `goodstype` VALUES ('3', '电器', '2020-05-08 17:38:36', '2020-05-08 21:18:41', '1');
 
 -- ----------------------------
 -- Table structure for orderbasis
