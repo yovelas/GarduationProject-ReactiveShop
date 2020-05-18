@@ -195,6 +195,15 @@ FOREIGN KEY(goods_id) REFERENCES goods(goods_id)
 );
 ```
 
+# SQL
+
+```
+-- 根据父分类名称查询相关的子分类列表
+select * from goodssubtype where goodstype_id in (select goodssubtype_id from goodstyperelative where goodsmaintype_id = (select goodstype_id from goodsmaintype where goodstype_name = '电脑办公'));
+```
+
+
+
 
 
 # 测试数据
