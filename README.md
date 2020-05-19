@@ -1,4 +1,4 @@
-# 数据库
+<!-- # 数据库
 
 -- 管理员信息表
 CREATE TABLE admin(
@@ -79,7 +79,7 @@ shoppingnum int not null COMMENT '购买数量',
 FOREIGN KEY(goods_id) REFERENCES goods(goods_id),
 FOREIGN KEY(orderbasis_id) REFERENCES orderbasis(orderbasis_id)
 );
-
+ -->
 
 
 
@@ -100,7 +100,7 @@ CREATE TABLE `goods` (
   `goods_store` int(11) NOT NULL COMMENT '库存',
   `goods_picture` text COMMENT '图片',
   `goods_describe` text COMMENT '商品描述',
-  `goodstype_id` text NOT NULL COMMENT '类型ID',
+  `goods_type_id` int NOT NULL COMMENT '类型ID',
   PRIMARY KEY (`goods_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 ```
@@ -137,7 +137,6 @@ CREATE TABLE `goods_type_main_with_sub_relationship` (
   PRIMARY KEY (`goods_type_main_with_sub_relationship_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 ```
-
 
 
 ### 购物车
@@ -244,6 +243,53 @@ WHERE goods_sub_type_id IN (
 	FROM goods_type_main_with_sub_relationship r
 	WHERE r.goods_type_main_with_sub_relationship_main_id = 1
 );
+
+-- 根据子类型ID查询商品
+SELECT *
+FROM goods
+WHERE goods_type_id = 130;
+
+-- 根据父类型ID查询商品
+SELECT *
+FROM goods
+WHERE goods_type_id IN (
+	SELECT goods_type_main_with_sub_relationship_sub_id
+	FROM goods_type_main_with_sub_relationship r
+	WHERE r.goods_type_main_with_sub_relationship_main_id = 9
+);
+
+-- 父子类型关联
+SELECT *
+FROM goods_sub_type s
+	JOIN goods_type_main_with_sub_relationship r ON r.goods_type_main_with_sub_relationship_id = s.goods_sub_type_id
+	JOIN goods_main_type m ON r.goods_type_main_with_sub_relationship_main_id = m.goods_main_type_id;
+
+-- 查询商品的同时查询父类型及子类型
+SELECT g.goods_id, g.goods_name, s.goods_sub_type_name, m.goods_main_type_name
+FROM goods g
+	JOIN goods_sub_type s ON g.goods_type_id = goods_sub_type_id
+	JOIN goods_type_main_with_sub_relationship r ON r.goods_type_main_with_sub_relationship_id = s.goods_sub_type_id
+	JOIN goods_main_type m ON r.goods_type_main_with_sub_relationship_main_id = m.goods_main_type_id;
+
+-- 全字段搜索
+SELECT *
+FROM goods
+WHERE (goods_name LIKE '%大%'
+	OR goods_sub_name LIKE '%大%'
+	OR goods_describe LIKE '%大%');
+
+-- 结合商品类型作为搜索关键字
+SELECT g.goods_id, g.goods_name, g.goods_sub_name, g.goods_describe, s.goods_sub_type_name
+	, m.goods_main_type_name
+FROM goods g
+	JOIN goods_sub_type s ON g.goods_type_id = goods_sub_type_id
+	JOIN goods_type_main_with_sub_relationship r ON r.goods_type_main_with_sub_relationship_id = s.goods_sub_type_id
+	JOIN goods_main_type m ON r.goods_type_main_with_sub_relationship_main_id = m.goods_main_type_id
+WHERE (g.goods_name LIKE '%女%'
+	OR g.goods_sub_name LIKE '%女%'
+	OR g.goods_describe LIKE '%女%'
+	OR s.goods_sub_type_name LIKE '%女%'
+	OR m.goods_main_type_name LIKE '%女%');
 ```
 
 
@@ -258,18 +304,18 @@ WHERE goods_sub_type_id IN (
 ```sql
 LOCK TABLES `goods` WRITE;
 INSERT INTO `goods` VALUES 
-    (1,'Coca-Cola 可乐瓶T恤','简约的纯色基调，宣扬自由轻松的休闲氛围。',340,5,'TB2y.jpg','等一下再写','1'),
-    (2,'熙薇 浅口复古奶奶鞋','方头设计，演绎出英伦风。',243,5,'O1CN01.jpg','等一下再写','1'),
-    (3,'萌系卡通咖啡杯','创意立体可爱萌系动物陶瓷杯子马克杯带盖勺牛奶杯情侣茶水咖啡杯',30,5,'TB2jfzp.webp','等一下再写','1'),
-    (4,'大豆家 方头奶奶鞋','一脚蹬设计，方便日常的穿脱',110,5,'TB2TF0.webp','等一下再写','1'),
-    (5,'抱枕选的好，家的颜值大提升','北欧现代简约风格沙发靠垫办公室抱枕床头靠枕汽车靠包大靠背腰枕',880,5,'TB2YJV.webp','等一下再写','1'),
-    (6,'没有脚的信凳 独特得不可思议','吱音原创 信凳创意北欧设计水曲柳全实木矮凳子家具个性板凳',40,5,'TB2ASA.webp','等一下再写','1'),
-    (7,'甜美学院风连衣裙','很仙的情侣装夏装连衣裙海军领甜美学院风短袖上衣学生套装班服潮',220,5,'O1CN01NS.jpg','等一下再写','1'),
-    (8,'很仙的两件连衣裙','很仙的法式情侣装一裙一衣两件夏季同色系露肩连衣裙2020新款裙子',260,5,'O1CN01k.jpg','等一下再写','1'),
-    (9,'简洁的桌面 给你一整天的舒畅','书立文件夹收纳盒办公桌书本收纳资料桌面文件框学生宿舍神器',280,5,'TB21yFr.webp','等一下再写','1'),
-    (10,'软皮奶奶鞋','方头单鞋女2020春新款平底浅口软皮奶奶鞋',139,5,'O1CN01j.webp','等一下再写','1'),
-    (11,'让我们来保护您的MacBook','macbookpro13苹果2020笔记本11电脑air13.3外壳12配件15保护壳mac',159,5,'TB1G7G.webp','等一下再写','1'),
-    (12,'儿童房也是颜值大担当','阿楹 飘窗小置物架玄关抽屉柜 ins实木北欧儿童房整理桌面收纳盒',109,5,'TB2Mk2.webp','等一下再写','1');
+  (1,'Coca-Cola 可乐瓶T恤','简约的纯色基调，宣扬自由轻松的休闲氛围。',340,5,'TB2y.jpg','等一下再写',107),
+  (2,'熙薇 浅口复古奶奶鞋','方头设计，演绎出英伦风。',243,5,'O1CN01.jpg','等一下再写',130),
+  (3,'萌系卡通咖啡杯','创意立体可爱萌系动物陶瓷杯子马克杯带盖勺牛奶杯情侣茶水咖啡杯',30,5,'TB2jfzp.webp','等一下再写',132),
+  (4,'大豆家 方头奶奶鞋','一脚蹬设计，方便日常的穿脱',110,5,'TB2TF0.webp','等一下再写',130),
+  (5,'抱枕选的好，家的颜值大提升','北欧现代简约风格沙发靠垫办公室抱枕床头靠枕汽车靠包大靠背腰枕',880,5,'TB2YJV.webp','等一下再写',131),
+  (6,'没有脚的信凳 独特得不可思议','吱音原创 信凳创意北欧设计水曲柳全实木矮凳子家具个性板凳',40,5,'TB2ASA.webp','等一下再写',133),
+  (7,'甜美学院风连衣裙','很仙的情侣装夏装连衣裙海军领甜美学院风短袖上衣学生套装班服潮',220,5,'O1CN01NS.jpg','等一下再写',120),
+  (8,'很仙的两件连衣裙','很仙的法式情侣装一裙一衣两件夏季同色系露肩连衣裙2020新款裙子',260,5,'O1CN01k.jpg','等一下再写',120),
+  (9,'简洁的桌面 给你一整天的舒畅','书立文件夹收纳盒办公桌书本收纳资料桌面文件框学生宿舍神器',280,5,'TB21yFr.webp','等一下再写',132),
+  (10,'软皮奶奶鞋','方头单鞋女2020春新款平底浅口软皮奶奶鞋',139,5,'O1CN01j.webp','等一下再写',130),
+  (11,'让我们来保护您的MacBook','macbookpro13苹果2020笔记本11电脑air13.3外壳12配件15保护壳mac',159,5,'TB1G7G.webp','等一下再写',29),
+  (12,'儿童房也是颜值大担当','阿楹 飘窗小置物架玄关抽屉柜 ins实木北欧儿童房整理桌面收纳盒',109,5,'TB2Mk2.webp','等一下再写',132);
 UNLOCK TABLES;
 ```
 
@@ -281,7 +327,7 @@ LOCK TABLES `goods_main_type` WRITE;
 INSERT INTO `goods_main_type` VALUES 
   (1,'手机数码',NULL),
   (2,'电脑办公',NULL),
-  (3,'家用电器',NULL),
+  (3,'家具用品',NULL),
   (4,'计生情趣',NULL),
   (5,'美妆护肤',NULL),
   (6,'个护清洗',NULL),
@@ -422,7 +468,11 @@ INSERT INTO `goods_sub_type` VALUES
   (126,'字母T恤','cc01c1b5.jpg'),
   (127,'连帽卫衣','N8a66a14c.jpg'),
   (128,'半身裙','Nf3df9f87.jpg'),
-  (129,'背带裙','Nca4b1172.jpg');
+  (129,'背带裙','Nca4b1172.jpg'),
+  (130,'豆豆鞋','971579bf.jpg'),
+  (131,'沙发垫套','bc8654fc.jpg'),
+  (132,'储物/置物架','9c80acb.jpg'),
+  (133,'椅子','e6cb765.jpg');
 UNLOCK TABLES;
 ```
 
@@ -557,6 +607,10 @@ INSERT INTO `goods_type_main_with_sub_relationship` VALUES
   (126,9,126),
   (127,9,127),
   (128,9,128),
-  (129,9,129);
+  (129,9,129),
+  (130,9,130),
+  (131,3,131),
+  (132,3,132),
+  (133,3,133);
 UNLOCK TABLES;
 ```
