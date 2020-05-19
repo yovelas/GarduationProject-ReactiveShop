@@ -138,6 +138,8 @@ CREATE TABLE `goods_type_main_with_sub_relationship` (
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 ```
 
+
+
 ### 购物车
 
 ```sql
@@ -222,10 +224,26 @@ FOREIGN KEY(goods_id) REFERENCES goods(goods_id)
 
 ```sql
 -- 根据父分类名称查询相关的子分类列表
-select * from goodssubtype where
-    goodstype_id in (select goodssubtype_id from goodstyperelative where 
-        goodsmaintype_id = (select goodstype_id from goodsmaintype where 
-        goodstype_name = '电脑办公'));
+SELECT *
+FROM goods_sub_type
+WHERE goods_sub_type_id IN (
+	SELECT goods_type_main_with_sub_relationship_sub_id
+	FROM goods_type_main_with_sub_relationship r
+	WHERE r.goods_type_main_with_sub_relationship_main_id = (
+		SELECT goods_main_type_id
+		FROM goods_main_type
+		WHERE goods_main_type_name = '电脑办公'
+	)
+);
+
+-- 根据父分类ID查询相关的子分类列表
+SELECT *
+FROM goods_sub_type
+WHERE goods_sub_type_id IN (
+	SELECT goods_type_main_with_sub_relationship_sub_id
+	FROM goods_type_main_with_sub_relationship r
+	WHERE r.goods_type_main_with_sub_relationship_main_id = 1
+);
 ```
 
 
@@ -241,19 +259,17 @@ select * from goodssubtype where
 LOCK TABLES `goods` WRITE;
 INSERT INTO `goods` VALUES 
     (1,'Coca-Cola 可乐瓶T恤','简约的纯色基调，宣扬自由轻松的休闲氛围。',340,5,'TB2y.jpg','等一下再写','1'),
-    (2,'Coca-Cola 可乐瓶T恤','简约的纯色基调，宣扬自由轻松的休闲氛围。',34    0,5,'TB2y.jpg','等一下再写','1'),
-    (3,'熙薇 浅口复古奶奶鞋','方头设计，演绎出英伦风。',340,5,'O1CN01.jpg','等一下再写','1'),
-    (4,'萌系卡通咖啡杯','创意立体可爱萌系动物陶瓷杯子马克杯带盖勺牛奶杯情侣茶水咖>    啡杯',340,5,'TB2jfzp.webp','等一下再写','1'),
-    (5,'大豆家 方头奶奶鞋','一脚蹬设计，方便日常的穿脱',340,5,'TB2TF0.webp','等一下再写','1'),
-    (6,'抱枕选的好，家的颜值大提升','北欧现代简约风格沙发靠垫办公室抱枕床头靠枕汽车靠包大靠背腰枕',340,5,'TB2YJV.webp','等一下再写','1'),
-    (7,'没有脚的信凳 独特得不可思议','吱音原创 信凳创意北欧设计水曲柳全实木矮凳子家具个性板凳',340,5,'TB2ASA.webp','等一下再写','1'),
-    (8,'甜美学院风连衣裙','很仙的情侣装夏装连衣裙海军领甜美学院风短袖上衣学生套装班服潮',340,5,'O1CN01NS.jpg','等一下再写','1'),
-    (9,'很仙的两件连衣裙','很仙的法式情侣装一裙一衣两件夏季同色系露肩连衣裙2020新款裙子',340,5,'O1CN01k.jpg','等一下再写','1'),
-    (10,'简洁的桌面 给你一整天的舒畅','书立文件夹收纳盒办公桌书本收纳资料桌面文件框学生宿舍神器',340,5,'TB21yFr.webp','等一下再写','1'),
-    (11,'软皮奶奶鞋','方头单
-    鞋女2020春新款平底浅口软皮奶奶鞋',340,5,'O1CN01j.webp','等一下再写','1'),
-    (12,'让我们来保护您的MacBook','macbookpro13苹果2020笔记本11电脑air13.3外壳12配件15保护壳mac',340,5,'TB1G7G.webp','等一下再写','    1'),
-    (13,'儿童房也是颜值大担当','阿楹 飘窗小置物架玄关抽屉柜 ins实木北欧儿童房整理桌面收纳盒',340,5,'TB2Mk2.webp','等一下再写','1');
+    (2,'熙薇 浅口复古奶奶鞋','方头设计，演绎出英伦风。',243,5,'O1CN01.jpg','等一下再写','1'),
+    (3,'萌系卡通咖啡杯','创意立体可爱萌系动物陶瓷杯子马克杯带盖勺牛奶杯情侣茶水咖啡杯',30,5,'TB2jfzp.webp','等一下再写','1'),
+    (4,'大豆家 方头奶奶鞋','一脚蹬设计，方便日常的穿脱',110,5,'TB2TF0.webp','等一下再写','1'),
+    (5,'抱枕选的好，家的颜值大提升','北欧现代简约风格沙发靠垫办公室抱枕床头靠枕汽车靠包大靠背腰枕',880,5,'TB2YJV.webp','等一下再写','1'),
+    (6,'没有脚的信凳 独特得不可思议','吱音原创 信凳创意北欧设计水曲柳全实木矮凳子家具个性板凳',40,5,'TB2ASA.webp','等一下再写','1'),
+    (7,'甜美学院风连衣裙','很仙的情侣装夏装连衣裙海军领甜美学院风短袖上衣学生套装班服潮',220,5,'O1CN01NS.jpg','等一下再写','1'),
+    (8,'很仙的两件连衣裙','很仙的法式情侣装一裙一衣两件夏季同色系露肩连衣裙2020新款裙子',260,5,'O1CN01k.jpg','等一下再写','1'),
+    (9,'简洁的桌面 给你一整天的舒畅','书立文件夹收纳盒办公桌书本收纳资料桌面文件框学生宿舍神器',280,5,'TB21yFr.webp','等一下再写','1'),
+    (10,'软皮奶奶鞋','方头单鞋女2020春新款平底浅口软皮奶奶鞋',139,5,'O1CN01j.webp','等一下再写','1'),
+    (11,'让我们来保护您的MacBook','macbookpro13苹果2020笔记本11电脑air13.3外壳12配件15保护壳mac',159,5,'TB1G7G.webp','等一下再写','1'),
+    (12,'儿童房也是颜值大担当','阿楹 飘窗小置物架玄关抽屉柜 ins实木北欧儿童房整理桌面收纳盒',109,5,'TB2Mk2.webp','等一下再写','1');
 UNLOCK TABLES;
 ```
 
@@ -263,28 +279,15 @@ UNLOCK TABLES;
 ```sql
 LOCK TABLES `goods_main_type` WRITE;
 INSERT INTO `goods_main_type` VALUES 
-  (1,' 手机数码',NULL),
+  (1,'手机数码',NULL),
   (2,'电脑办公',NULL),
   (3,'家用电器',NULL),
   (4,'计生情趣',NULL),
   (5,'美妆护肤',NULL),
   (6,'个护清洗',NULL),
   (7,'汽车生活',NULL),
-  (8,'京东',NULL),
-  (9,'男装',NULL),
-  (10,'女装',NULL),
-  (11,'男鞋',NULL),
-  (12,'女装',NULL),
-  (13,'女鞋',NULL),
-  (14,'母婴童装',NULL),
-  (15,'图书音像',NULL),
-  (16,'运动户外',NULL),
-  (17,'内衣配饰',NULL),
-  (18,'食品生鲜',NULL),
-  (19,'酒水饮料',NULL),
-  (20,'家具家装',NULL),
-  (21,'家居厨具',NULL),
-  (22,'箱包手装',NULL);
+  (8,'男装',NULL),
+  (9,'女装',NULL);
 UNLOCK TABLES;
 ```
 
@@ -545,14 +548,15 @@ INSERT INTO `goods_type_main_with_sub_relationship` VALUES
   (117,8,117),
   (118,8,118),
   (119,8,119),
-  (120,9,121),
-  (121,9,122),
-  (122,9,123),
-  (123,9,124),
-  (124,9,125),
-  (125,9,126),
-  (126,9,127),
-  (127,9,128),
-  (128,9,129);
+  (120,9,120),
+  (121,9,121),
+  (122,9,122),
+  (123,9,123),
+  (124,9,124),
+  (125,9,125),
+  (126,9,126),
+  (127,9,127),
+  (128,9,128),
+  (129,9,129);
 UNLOCK TABLES;
 ```
