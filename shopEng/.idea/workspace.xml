@@ -1,0 +1,391 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="7e92fdfe-ff70-448c-b1f9-966532c88f73" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/yovelas/controller/GoodsController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/yovelas/dao/GoodsDao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/yovelas/entity/Goods.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/yovelas/entity/GoodsMainType.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/yovelas/entity/GoodsSubType.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/yovelas/mapper/GoodsMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/03fe5e9ef.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/0418625.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/078d5e6.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/07b12f0c.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/14214c4f.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/14307e.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/14672d9f.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/1Nf71bb1a4.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/1b7264.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/2103e1ad.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/25c264a.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/25c9ddd.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/2f87411.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/3834e3c9.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/3d8b4c9.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/406a15.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/43e80da5.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/48dc86e1.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/48fa2317.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/4a24b521.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/561fea.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/5a64b4.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/5b10669e.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/62861b9b.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/695a7262.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/6N59344f7a.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/6dfd03.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/6e136.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/740c051.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/78b48547.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/79b4e4.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/7d4de465.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/7ed9c341.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/806b102c.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/820f6506.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/84bc1bed.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/85e503.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/897f65d0.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/8b9f3d4.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/9101722c.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/92jfwnf.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/958dc424a.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/971579bf.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/9c80acb.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/N052e26a3.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/N0e69037f.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/N13635e0b.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/N18ed0cd5.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/N205f4cc7.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/N21358b6a.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/N26b23a3a.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/N2f022a90.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/N2fc58c3e.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/N37c4848f.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/N3add85ae.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/N44b9f566.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/N48c68336.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/N50016f64.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/N52823c3e.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/N56abbe6e.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/N5db3a834.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/N63e76af2.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/N699a9345.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/N6ea88eba.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/N72fa8f49.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/N7374a31d.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/N73ba4e26.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/N89330bb3.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/N8a66a14c.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/N8a775fab.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/N905aaf4c.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/N9756f6e5.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/N98fe0b9b.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/N9c125c81.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/N9f7271c7.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/Na5eec222.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/Na79b47b4.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/Nb358db45.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/Nb81047cc.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/Nb9312b61.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/Nb9978251.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/Nbb40dec0.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/Nc1e88220.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/Nc3b46f7b.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/Nc4c681fb.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/Nc9df1b71.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/Nca4b1172.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/Nd140f4e3.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/Ne1ec9fe8.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/Nea1d3f59.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/Neba3a5aa.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/Nf3df9f87.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/Nf537d6b0.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/Nf7647558.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/Nf77d9f6c.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/Nf7957b34.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/Nfd44dcdd.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/Nff658599.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/O1CN01.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/O1CN01NS.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/O1CN01j.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/O1CN01k.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/TB1G7G.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/TB21yFr.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/TB2ASA.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/TB2Mk2.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/TB2TF0.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/TB2YJV.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/TB2jfzp.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/TB2y.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/a1183476.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/a342fa77.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/a3bed32.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/a5bdc629.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/a74bc3.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/a93f7a9.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/aNc332a72c.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/aNde6af185.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/ab8a3a6.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/ac7677e.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/af0738.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/b5ea6a23.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/bbbd9fb.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/bc8654fc.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/bf8afd0d.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/c6ce6f5.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/c891be87.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/c95373.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/cN019c7fda.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/cc01c1b5.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/d0e71275.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/d1ac3072.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/d36d47.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/dN8c2a767c.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/da08084.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/e6cb765.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/e73077.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/e8ebee02.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/eN06ceb604.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/eca33c.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/ecd5bd0e.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/f0179e0.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/f6918c9e.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/f6ffa5e.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/file/fN91da46b1.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../README.en.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/yovelas/AppConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/yovelas/AppConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/yovelas/controller/FileController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/yovelas/controller/FileController.java" afterDir="false" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CodeStyleSettingsInfer">
+    <option name="done" value="true" />
+  </component>
+  <component name="DefaultGradleProjectSettings">
+    <option name="isMigrated" value="true" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="importingSettings">
+      <MavenImportingSettings>
+        <option name="importAutomatically" value="true" />
+      </MavenImportingSettings>
+    </option>
+  </component>
+  <component name="ProjectCodeStyleSettingsMigration">
+    <option name="version" value="1" />
+  </component>
+  <component name="ProjectId" id="1c1hOyySUqvWTJ2N7qa97ZyWSdf" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="RequestMappingsPanelOrder0" value="0" />
+    <property name="RequestMappingsPanelOrder1" value="1" />
+    <property name="RequestMappingsPanelWidth0" value="75" />
+    <property name="RequestMappingsPanelWidth1" value="75" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
+    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.0" />
+    <property name="settings.editor.selected.configurable" value="Errors" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.yovelas.entity" />
+      <recent name="com.yovelas.controller" />
+      <recent name="com.yovelas.dao" />
+      <recent name="com.yovelas.mapper" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/resources/file" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager" selected="Application.App">
+    <configuration name="App" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.yovelas.App" />
+      <module name="blog" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.yovelas.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="App" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+      <module name="blog" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.yovelas.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.yovelas.App" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.App" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="7e92fdfe-ff70-448c-b1f9-966532c88f73" name="Default Changelist" comment="" />
+      <created>1577702820609</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1577702820609</updated>
+      <workItem from="1577702847966" duration="530000" />
+      <workItem from="1577703867876" duration="5019000" />
+      <workItem from="1577751089512" duration="2558000" />
+      <workItem from="1577755344532" duration="5759000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="13866000" />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ArtifactsStructureConfigurable.UI">
+        <settings>
+          <artifact-editor />
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="FacetStructureConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="GlobalLibrariesConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="JdkListConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ModuleStructureConfigurable.UI">
+        <settings>
+          <last-edited>blog</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.53054297" />
+                <option value="0.6" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectJDKs.UI">
+        <settings>
+          <last-edited>1.8</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectLibrariesConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
+  </component>
+</project>
