@@ -81,6 +81,31 @@ FOREIGN KEY(orderbasis_id) REFERENCES orderbasis(orderbasis_id)
 );
  -->
 
+# 前端数据
+
+商品列表
+```json
+[
+  {
+    "name":"情侣装夏装情侣款2020年夏季两件套装连衣裙气质洋气衬衫拼色潮流",
+    "price":"88.00-142.00",
+    "address":"广东广州",
+    "argument1":"颜色:红色,黄色,蓝色,绿色,青色",
+    "argument2":"尺码:S,M,L,XL,2XL",
+    "amount":"888",
+    "picture":"1.jpg,2.jpg,3.jpg,4.jpg,5.jpg",
+    "details":"![](1.jpg)![2.jpg]"
+  }
+]
+```
+
+红色-S 80
+红色-M 90
+红色-L 90
+红色-XL 90
+红色-2XL 90
+黄色-S 85
+
 
 
 # 数据库
@@ -96,8 +121,8 @@ CREATE TABLE `goods` (
   `goods_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '商品ID',
   `goods_name` varchar(500) NOT NULL COMMENT '商品名',
   `goods_sub_name` varchar(500) NOT NULL COMMENT '副标题',
-  `goods_price` double NOT NULL COMMENT '现价',
-  `goods_store` int(11) NOT NULL COMMENT '库存',
+  `goods_price` int NOT NULL COMMENT '价格',
+  `goods_source` varchar(50) NOT NULL COMMENT '商品来源',
   `goods_picture` text COMMENT '图片',
   `goods_describe` text COMMENT '商品描述',
   `goods_type_id` int NOT NULL COMMENT '类型ID',
@@ -105,6 +130,39 @@ CREATE TABLE `goods` (
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 ```
 
+```sql
+DROP TABLE IF EXISTS `goods_parameter`;
+CREATE TABLE `goods_parameter` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `goods_id` int(11) NOT NULL COMMENT '商品ID',
+  `goods_parameter` varchar(500) NOT NULL COMMENT '商品参数',
+  `goods_optional` int(1) NOT NULL COMMENT '参数是否是必须的，0=必须，1=可选',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+```
+
+```sql
+DROP TABLE IF EXISTS `goods_parameter_option`;
+CREATE TABLE `goods_parameter_option` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `goods_parameter_id` int(11) NOT NULL COMMENT '商品参数ID',
+  `goods_option` varchar(500) NOT NULL COMMENT '参数选项',
+  `goods_picture` varchar(500) COMMENT '参数选项图片',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+```
+
+```sql
+DROP TABLE IF EXISTS `goods_data`;
+CREATE TABLE `goods_data` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `goods_id` int(11) NOT NULL COMMENT '商品ID',
+  `goods_configuration` varchar(500) NOT NULL COMMENT '商品配置',
+  `goods_price` DOUBLE(5,2) NOT NULL COMMENT '商品价格',
+  `goods_inventory` int(11) NOT NULL COMMENT '商品库存',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+```
 
 ### 商品类型
 
@@ -219,6 +277,8 @@ FOREIGN KEY(goods_id) REFERENCES goods(goods_id)
 );
 ```
 
+
+
 # SQL
 
 ```sql
@@ -290,6 +350,17 @@ WHERE (g.goods_name LIKE '%女%'
 	OR g.goods_describe LIKE '%女%'
 	OR s.goods_sub_type_name LIKE '%女%'
 	OR m.goods_main_type_name LIKE '%女%');
+
+-- 查询商品的价格区间
+SELECT MAX(goods_price) AS max, MIN(goods_price) AS min
+FROM goods_data
+WHERE goods_id = 1;
+
+-- 查询商品ID为1的白色S码的价格 {1:1,2:5}
+SELECT *
+FROM goods_data
+WHERE goods_id = 1
+	AND goods_configuration = '{1:1,2:5}';
 ```
 
 
@@ -304,20 +375,80 @@ WHERE (g.goods_name LIKE '%女%'
 ```sql
 LOCK TABLES `goods` WRITE;
 INSERT INTO `goods` VALUES 
-  (1,'Coca-Cola 可乐瓶T恤','简约的纯色基调，宣扬自由轻松的休闲氛围。',340,5,'TB2y.jpg','等一下再写',107),
-  (2,'熙薇 浅口复古奶奶鞋','方头设计，演绎出英伦风。',243,5,'O1CN01.jpg','等一下再写',130),
-  (3,'萌系卡通咖啡杯','创意立体可爱萌系动物陶瓷杯子马克杯带盖勺牛奶杯情侣茶水咖啡杯',30,5,'TB2jfzp.webp','等一下再写',132),
-  (4,'大豆家 方头奶奶鞋','一脚蹬设计，方便日常的穿脱',110,5,'TB2TF0.webp','等一下再写',130),
-  (5,'抱枕选的好，家的颜值大提升','北欧现代简约风格沙发靠垫办公室抱枕床头靠枕汽车靠包大靠背腰枕',880,5,'TB2YJV.webp','等一下再写',131),
-  (6,'没有脚的信凳 独特得不可思议','吱音原创 信凳创意北欧设计水曲柳全实木矮凳子家具个性板凳',40,5,'TB2ASA.webp','等一下再写',133),
-  (7,'甜美学院风连衣裙','很仙的情侣装夏装连衣裙海军领甜美学院风短袖上衣学生套装班服潮',220,5,'O1CN01NS.jpg','等一下再写',120),
-  (8,'很仙的两件连衣裙','很仙的法式情侣装一裙一衣两件夏季同色系露肩连衣裙2020新款裙子',260,5,'O1CN01k.jpg','等一下再写',120),
-  (9,'简洁的桌面 给你一整天的舒畅','书立文件夹收纳盒办公桌书本收纳资料桌面文件框学生宿舍神器',280,5,'TB21yFr.webp','等一下再写',132),
-  (10,'软皮奶奶鞋','方头单鞋女2020春新款平底浅口软皮奶奶鞋',139,5,'O1CN01j.webp','等一下再写',130),
-  (11,'让我们来保护您的MacBook','macbookpro13苹果2020笔记本11电脑air13.3外壳12配件15保护壳mac',159,5,'TB1G7G.webp','等一下再写',29),
-  (12,'儿童房也是颜值大担当','阿楹 飘窗小置物架玄关抽屉柜 ins实木北欧儿童房整理桌面收纳盒',109,5,'TB2Mk2.webp','等一下再写',132);
+  (1,'Coca-Cola 可乐瓶T恤','简约的纯色基调，宣扬自由轻松的休闲氛围。',1,'日本','TB2y.jpg','![](TB11FXw1.jpg)![](TB11FXw2.jpg)(center,black,block,14)::重要说明(center,black,block,14)::可乐瓶的位置随着尺码不同而不同，其原因咨询过专柜店长，答复如下：(center,black,block,14)::此款商品的工艺是先印染，再裁剪。(center,black,block,14)::所以尺码越小，瓶子月接近底部边线，甚至会有平底缺失（如S码无平底，M码平底压线）(center,black,block,14)::尺码越大，瓶子底部越远离底部边线，达到官方概念图的效果（如L码，和 XL码）(center,black,block,14)::并且每件衣服裁剪的程度不同也会存在同一尺码瓶子位置有偏差。(center,black,block,14)::综上，介意的亲慎重考虑后再下单，切勿因此产生不必要的麻烦，。![](TB11FXw3.jpg)![](TB11FXw4.jpg)![](TB11FXw5.jpg)![](TB11FXw6.jpg)![](TB11FXw7.jpg)![](TB11FXw8.jpg)![](TB11FXw9.jpg)![](TB11FXw10.jpg)(center,#e6232b,block,16)::Coca-Cola（コカ�9�9コーラ グッズ） ユニセックス Tシャツ ストローinボトル チャコール',107),
+  (2,'熙薇 浅口复古奶奶鞋','方头设计，演绎出英伦风。',1,'广东广州','O1CN01.jpg','等一下再写',130),
+  (3,'萌系卡通咖啡杯','创意立体可爱萌系动物陶瓷杯子马克杯带盖勺牛奶杯情侣茶水咖啡杯',1,'广东深圳','TB2jfzp.webp','等一下再写',132),
+  (4,'大豆家 方头奶奶鞋','一脚蹬设计，方便日常的穿脱',1,'广东佛山','TB2TF0.webp','等一下再写',130),
+  (5,'抱枕选的好，家的颜值大提升','北欧现代简约风格沙发靠垫办公室抱枕床头靠枕汽车靠包大靠背腰枕',1,'广东揭阳','TB2YJV.webp','等一下再写',131),
+  (6,'没有脚的信凳 独特得不可思议','吱音原创 信凳创意北欧设计水曲柳全实木矮凳子家具个性板凳',1,'广东东莞','TB2ASA.webp','等一下再写',133),
+  (7,'甜美学院风连衣裙','很仙的情侣装夏装连衣裙海军领甜美学院风短袖上衣学生套装班服潮',1,'江西南昌','O1CN01NS.jpg','等一下再写',120),
+  (8,'很仙的两件连衣裙','很仙的法式情侣装一裙一衣两件夏季同色系露肩连衣裙2020新款裙子',1,'湖南长沙','O1CN01k.jpg','等一下再写',120),
+  (9,'简洁的桌面 给你一整天的舒畅','书立文件夹收纳盒办公桌书本收纳资料桌面文件框学生宿舍神器',1,'福建厦门','TB21yFr.webp','等一下再写',132),
+  (10,'软皮奶奶鞋','方头单鞋女2020春新款平底浅口软皮奶奶鞋',1,'广西南宁','O1CN01j.webp','等一下再写',130),
+  (11,'让我们来保护您的MacBook','macbookpro13苹果2020笔记本11电脑air13.3外壳12配件15保护壳mac',1,'广西柳州','TB1G7G.webp','等一下再写',29),
+  (12,'儿童房也是颜值大担当','阿楹 飘窗小置物架玄关抽屉柜 ins实木北欧儿童房整理桌面收纳盒',1,'浙江温州','TB2Mk2.webp','等一下再写',132);
 UNLOCK TABLES;
 ```
+
+```sql
+LOCK TABLES `goods_parameter` WRITE;
+INSERT INTO `goods_parameter` VALUES 
+  (1,1,'尺码'),
+  (2,1,'颜色')
+UNLOCK TABLES;
+```
+
+```sql
+LOCK TABLES `goods_parameter_option` WRITE;
+INSERT INTO `goods_parameter_option` VALUES 
+  (1,1,'S'),
+  (2,1,'M'),
+  (3,1,'XL'),
+  (4,2,'深灰色','TB1Ysu.jpg')
+  (5,2,'白色','TB1HrbB.jpg')
+  (6,2,'米色','TB1kqD.jpg')
+UNLOCK TABLES;
+```
+
+```sql
+LOCK TABLES `goods_data` WRITE;
+INSERT INTO `goods_data` VALUES 
+  (1,1,'{1:1,2:4}',340,30),
+  (2,1,'{1:2,2:4}',342,30),
+  (3,1,'{1:3,2:4}',344,30),
+  (4,1,'{1:1,2:5}',345,30),
+  (5,1,'{1:2,2:5}',348,30),
+  (6,1,'{1:3,2:5}',349,30),
+  (7,1,'{1:1,2:6}',352,30),
+  (8,1,'{1:2,2:6}',356,30),
+  (9,1,'{1:3,2:6}',359,30);
+UNLOCK TABLES;
+```
+
+```
+![](TB11FXw1.jpg)
+![](TB11FXw2.jpg)
+(center,black,block,14)::重要说明
+(center,black,block,14)::可乐瓶的位置随着尺码不同而不同，其原因咨询过专柜店长，答复如下：
+(center,black,block,14)::此款商品的工艺是先印染，再裁剪。
+(center,black,block,14)::所以尺码越小，瓶子月接近底部边线，甚至会有平底缺失（如S码无平底，M码平底压线）
+(center,black,block,14)::尺码越大，瓶子底部越远离底部边线，达到官方概念图的效果（如L码，和 XL码）
+(center,black,block,14)::并且每件衣服裁剪的程度不同也会存在同一尺码瓶子位置有偏差。
+(center,black,block,14)::综上，介意的亲慎重考虑后再下单，切勿因此产生不必要的麻烦，。
+![](TB11FXw3.jpg)
+![](TB11FXw4.jpg)
+![](TB11FXw5.jpg)
+![](TB11FXw6.jpg)
+![](TB11FXw7.jpg)
+![](TB11FXw8.jpg)
+![](TB11FXw9.jpg)
+![](TB11FXw10.jpg)
+(center,#e6232b,block,16)::Coca-Cola（コカ�9�9コーラ グッズ） ユニセックス Tシャツ ストローinボトル チャコール 
+```
+
+
+
+
 
 
 ## 商品类型
