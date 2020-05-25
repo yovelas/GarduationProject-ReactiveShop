@@ -26,8 +26,104 @@ public class GoodsController {
 
     @CrossOrigin
     @GetMapping()
-    List allArticle() {
-        return goodsDao.randSelectAllGoods();
+    List allGoods() throws IllegalAccessException {
+        ArrayList<Object> result = new ArrayList<>();           // 储存返回结果
+
+        List<Goods> goods = goodsDao.randSelectAllGoods();
+        for(int i = 0; i< goods.size(); i++){      // 遍历父级分类
+            HashMap<String, Object> item = new HashMap<>();     // 储存每个条目
+
+            // 将父级分类对象转换成Map对象
+            Class<?> clazz = goods.get(i).getClass();
+            for (Field field : clazz.getDeclaredFields()) {
+                field.setAccessible(true);
+                item.put(field.getName(),field.get(goods.get(i)));
+            }
+            item.put("goodsPicture",((String)item.get("goodsPicture")).split(","));
+
+            result.add(item);
+        }
+
+        return result;
+    }
+
+    @CrossOrigin
+    @GetMapping("/{id}")
+    Map oneGoodsById(@PathVariable("id") int id) throws IllegalAccessException {
+
+        HashMap<String, Object> item = new HashMap<>();     // 储存每个条目
+        ArrayList<Map> parameterlist = new ArrayList<>();
+        Goods goods = goodsDao.selectOneGoods(id);
+        List<GoodsParameter> goodsParameters = goodsDao.selectAllGoodsParameterByGoodsId(id);
+
+        // 将对象转换成Map对象
+        Class<?> clazz = goods.getClass();
+        for (Field field : clazz.getDeclaredFields()) {
+            field.setAccessible(true);
+            item.put(field.getName(),field.get(goods));
+        }
+
+        // 将参数对象转换成Map对象
+        for(int i = 0; i < goodsParameters.size(); i++) {
+            HashMap<String, Object> itemP = new HashMap<>();     // 储存每个条目
+            Class<?> clazzP = goodsParameters.get(i).getClass();
+            for (Field field : clazzP.getDeclaredFields()) {
+                field.setAccessible(true);
+                itemP.put(field.getName(), field.get(goodsParameters.get(i)));
+            }
+            itemP.put("goodsParameterOption", goodsDao.selectAllGoodsParameterOptionByParameterId(goodsParameters.get(i).getId()));
+            parameterlist.add(itemP);
+        }
+
+        // 转换图片为list
+        item.put("goodsPicture",((String)item.get("goodsPicture")).split(","));
+        // 添加参数
+        item.put("goodsParameter",parameterlist);
+        return item;
+    }
+
+    @CrossOrigin
+    @GetMapping("/list/{keyWord}")
+    List GoodsListByKeyWord(@PathVariable("keyWord") String keyWord) throws IllegalAccessException {
+        System.out.println(keyWord);
+
+        List<Goods> goods = goodsDao.selectGoodsListByKeyWord("%" + keyWord + "%");
+        ArrayList result = new ArrayList<>();
+
+        for(int i = 0; i< goods.size();i++){
+            HashMap<String, Object> item = new HashMap<>();     // 储存每个条目
+            ArrayList<Map> parameterlist = new ArrayList<>();
+            // 将对象转换成Map对象
+            Class<?> clazz = goods.get(i).getClass();
+            for (Field field : clazz.getDeclaredFields()) {
+                field.setAccessible(true);
+                item.put(field.getName(),field.get(goods.get(i)));
+            }
+
+            List<GoodsParameter> goodsParameters = goodsDao.selectAllGoodsParameterByGoodsId(goods.get(i).getGoodsId());
+
+            // 将参数对象转换成Map对象
+            for(int j = 0; j < goodsParameters.size(); j++) {
+                HashMap<String, Object> itemP = new HashMap<>();     // 储存每个条目
+                Class<?> clazzP = goodsParameters.get(i).getClass();
+                for (Field field : clazzP.getDeclaredFields()) {
+                    field.setAccessible(true);
+                    itemP.put(field.getName(), field.get(goodsParameters.get(i)));
+                }
+                itemP.put("goodsParameterOption", goodsDao.selectAllGoodsParameterOptionByParameterId(goodsParameters.get(i).getId()));
+                parameterlist.add(itemP);
+            }
+
+            // 转换图片为list
+            item.put("goodsPicture",((String)item.get("goodsPicture")).split(","));
+            item.put("goodsPrice",((String)item.get("goodsPrice")).split("-")[0]);
+            // 添加参数
+            item.put("goodsParameter",parameterlist);
+            result.add(item);
+        }
+
+
+        return result;
     }
 
     /**
@@ -64,83 +160,4 @@ public class GoodsController {
         }
         return result;
     }
-
-
-
-    @RequestMapping("/hotarticle")
-    List hotArticle() {
-        return articleService.selectHotArticle();
-    }
-
-    @RequestMapping("/articlebyid")
-    Object getArticleById(@Param("id") int id) {
-        return articleService.selectArticleById(id);
-    }
-
-    @RequestMapping("/articlebyclassfyid")
-    Object selectSpecifyClassfyArticle(@Param("id") int id) {
-        return articleService.selectSpecifyClassfyArticle(id);
-    }
-
-    @CrossOrigin
-    @RequestMapping("/articlebyuser/{id}")
-    Object ArticleByUser(HttpServletRequest req,@PathVariable int id,int page,int limit) {
-        System.out.println(page);
-        System.out.println(limit);
-        HashMap<String, Object> map = new HashMap<>();
-        map.put("page",page-1);
-        map.put("limit",limit);
-        map.put("id",id);
-
-        List<Article> articles = articleService.selectArticleByUser(map);
-        LayUiEntity layUiEntity = new LayUiEntity();
-        layUiEntity.setCode(0);
-        layUiEntity.setCount(articleService.selectArticleCount(id));
-        layUiEntity.setData(articles);
-        return layUiEntity;
-    }
-
-    @CrossOrigin(allowCredentials = "true")
-    @RequestMapping("/write")
-    Object writeArticle(HttpServletRequest req,@RequestBody Article article) {
-        article.setAuthor(((User)req.getSession().getAttribute("user")).getId());
-        System.out.println(article);
-        articleService.insertArticle(article);
-        return new JsonResult().setStatus(200).setMassage("success").setData(articleService.selectSpecifyArticle(article));
-    }
-
-    @CrossOrigin(allowCredentials = "true")
-    @RequestMapping("/delete")
-    Object deleteArticle(HttpServletRequest req,@RequestBody Map id) {
-        System.out.println(id.get("id"));
-        articleService.deleteArticle((int)id.get("id"));
-        return new JsonResult();
-    }
-
-    @CrossOrigin(allowCredentials = "true")
-    @RequestMapping("/edit")
-    Object editArticle(HttpServletRequest req,@RequestBody Article article) {
-        System.out.println(article);
-        articleService.updateArticle(article);
-        return new JsonResult();
-    }
-
-    @CrossOrigin(allowCredentials = "true")
-    @RequestMapping("/addlike")
-    Object addLike(@RequestBody Map map) {
-        System.out.println("likelike");
-        System.out.println(map);
-        System.out.println(articleService.addLikeArticle((int)map.get("id")));
-        return new JsonResult();
-    }
-
-    @CrossOrigin(allowCredentials = "true")
-    @RequestMapping("/addread")
-    Object addRead(@RequestBody Map map) {
-        System.out.println("readread");
-        System.out.println(map);
-        System.out.println(articleService.addReadArticle((int)map.get("id")));
-        return new JsonResult();
-    }
-
 }

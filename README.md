@@ -107,6 +107,31 @@ FOREIGN KEY(orderbasis_id) REFERENCES orderbasis(orderbasis_id)
 黄色-S 85
 
 
+# DOME
+
+```js
+var text = "![](TB11FXw1.jpg)![](TB11FXw2.jpg)(center,black,block,14)::重要说明%%%(center,black,block,14)::可乐瓶的位置随着尺码不同而不同，其原因咨询过专柜店长，答复如下：%%%(center,black,block,14)::此款商品的工艺是先印染，再裁剪。%%%(center,black,block,14)::所以尺码越小，瓶子月接近底部边线，甚至会有平底缺失（如S码无平底，M码平底压线）%%%(center,black,block,14)::尺码越大，瓶子底部越远离底部边线，达到官方概念图的效果（如L码，和 XL码）%%%(center,black,block,14)::并且每件衣服裁剪的程度不同也会存在同一尺码瓶子位置有偏差。%%%(center,black,block,14)::综上，介意的亲慎重考虑后再下单，切勿因此产生不必要的麻烦，。%%%![](TB11FXw3.jpg)![](TB11FXw4.jpg)![](TB11FXw5.jpg)![](TB11FXw6.jpg)![](TB11FXw7.jpg)![](TB11FXw8.jpg)![](TB11FXw9.jpg)![](TB11FXw10.jpg)(center,#e6232b,block,16)::Coca-Cola（コカ�9�9コーラ グッズ） ユニセックス Tシャツ ストローinボトル チャコール";
+
+// 格式化商品详情文本
+var result, pattern = /\(\w*\,(\#)?\w*,\w*,\w*\)\:\:/g;
+while((result = pattern.exec(text)) != null) {  // 转样式表记为CSS样式格式
+    var itmes = result[0].match(/\w*\,(\#)?\w*,\w*,\w*/)[0].split(",");
+    console.log(itmes);
+    itmes[0] = "text-align:" + itmes[0];
+    itmes[1] = "color:" + itmes[1];
+    itmes[2] = "display:" + itmes[2];
+    itmes[3] = "font-size:" + itmes[3] + "px";
+    var style = " style=\""+itmes.join(";")+"\"";
+    text = text.slice(0,result.index)+"<p"+style+">"+text.slice(pattern.lastIndex,text.length-1)
+}
+// 转换结束标记，图片标记
+text = text.replace(/%%%/g,"</p>").replace(/\!\[\]\(/g,"<img style='width:100%' src='http://localhost:8080/file/download/").replace(/\)/g,"/' />");
+
+// 填充
+document.write(text);
+```
+
+
 
 # 数据库
 
@@ -139,6 +164,8 @@ CREATE TABLE `goods_parameter` (
   `goods_optional` int(1) NOT NULL COMMENT '参数是否是必须的，0=必须，1=可选',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+select * from goods_parameter p join goods_parameter_option o on p.id=o.goods_parameter_id where p.goods_id=1;
 ```
 
 ```sql
@@ -163,6 +190,8 @@ CREATE TABLE `goods_data` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 ```
+
+
 
 ### 商品类型
 
@@ -339,8 +368,18 @@ WHERE (goods_name LIKE '%大%'
 	OR goods_describe LIKE '%大%');
 
 -- 结合商品类型作为搜索关键字
-SELECT g.goods_id, g.goods_name, g.goods_sub_name, g.goods_describe, s.goods_sub_type_name
-	, m.goods_main_type_name
+SELECT g.goods_id, g.goods_name, g.goods_sub_name, g.goods_source, g.goods_picture
+	, g.goods_describe, g.goods_type_id
+	, (
+		SELECT Concat(MAX(goods_price), '-', MIN(goods_price))
+		FROM goods_data
+		WHERE goods_id = 1
+	) AS goods_price
+	, (
+		SELECT SUM(goods_inventory)
+		FROM goods_data
+		WHERE goods_id = 1
+	) AS goods_inventory
 FROM goods g
 	JOIN goods_sub_type s ON g.goods_type_id = goods_sub_type_id
 	JOIN goods_type_main_with_sub_relationship r ON r.goods_type_main_with_sub_relationship_id = s.goods_sub_type_id
@@ -356,11 +395,44 @@ SELECT MAX(goods_price) AS max, MIN(goods_price) AS min
 FROM goods_data
 WHERE goods_id = 1;
 
+-- 查询商品的价格区间
+SELECT Concat(MAX(goods_price), '-', MIN(goods_price)) AS price
+FROM goods_data
+WHERE goods_id = 1;
+
+-- 查询商品库存
+SELECT SUM(goods_inventory)
+FROM goods_data
+WHERE goods_id = 1;
+
 -- 查询商品ID为1的白色S码的价格 {1:1,2:5}
 SELECT *
 FROM goods_data
 WHERE goods_id = 1
 	AND goods_configuration = '{1:1,2:5}';
+
+-- 查询相关商品的参数
+SELECT *
+FROM goods_parameter p
+	JOIN goods_parameter_option o ON p.id = o.goods_parameter_id
+WHERE p.goods_id = 1;
+
+-- 查询单个商品,结合价格区间,库存总数
+SELECT goods_id, goods_name, goods_sub_name, goods_source, goods_picture
+	, goods_describe, goods_type_id
+	, (
+		SELECT Concat(MAX(goods_price), '-', MIN(goods_price))
+		FROM goods_data
+		WHERE goods_id = 1
+	) AS goods_price
+	, (
+		SELECT SUM(goods_inventory)
+		FROM goods_data
+		WHERE goods_id = 1
+	) AS goods_inventory
+FROM goods
+WHERE goods_id = 1;
+
 ```
 
 
@@ -375,8 +447,8 @@ WHERE goods_id = 1
 ```sql
 LOCK TABLES `goods` WRITE;
 INSERT INTO `goods` VALUES 
-  (1,'Coca-Cola 可乐瓶T恤','简约的纯色基调，宣扬自由轻松的休闲氛围。',1,'日本','TB2y.jpg','![](TB11FXw1.jpg)![](TB11FXw2.jpg)(center,black,block,14)::重要说明(center,black,block,14)::可乐瓶的位置随着尺码不同而不同，其原因咨询过专柜店长，答复如下：(center,black,block,14)::此款商品的工艺是先印染，再裁剪。(center,black,block,14)::所以尺码越小，瓶子月接近底部边线，甚至会有平底缺失（如S码无平底，M码平底压线）(center,black,block,14)::尺码越大，瓶子底部越远离底部边线，达到官方概念图的效果（如L码，和 XL码）(center,black,block,14)::并且每件衣服裁剪的程度不同也会存在同一尺码瓶子位置有偏差。(center,black,block,14)::综上，介意的亲慎重考虑后再下单，切勿因此产生不必要的麻烦，。![](TB11FXw3.jpg)![](TB11FXw4.jpg)![](TB11FXw5.jpg)![](TB11FXw6.jpg)![](TB11FXw7.jpg)![](TB11FXw8.jpg)![](TB11FXw9.jpg)![](TB11FXw10.jpg)(center,#e6232b,block,16)::Coca-Cola（コカ�9�9コーラ グッズ） ユニセックス Tシャツ ストローinボトル チャコール',107),
-  (2,'熙薇 浅口复古奶奶鞋','方头设计，演绎出英伦风。',1,'广东广州','O1CN01.jpg','等一下再写',130),
+  (1,'Coca-Cola 可乐瓶T恤','简约的纯色基调，宣扬自由轻松的休闲氛围。',1,'日本','SZFvXXaT1.jpg,SZFvXXaT2.jpg,SZFvXXaT3.jpg,SZFvXXaT4.jpg,SZFvXXaT5.jpg','![](TB11FXw1.jpg)![](TB11FXw2.jpg)(center,black,block,14)::重要说明(center,black,block,14)::可乐瓶的位置随着尺码不同而不同，其原因咨询过专柜店长，答复如下：(center,black,block,14)::此款商品的工艺是先印染，再裁剪。(center,black,block,14)::所以尺码越小，瓶子月接近底部边线，甚至会有平底缺失（如S码无平底，M码平底压线）(center,black,block,14)::尺码越大，瓶子底部越远离底部边线，达到官方概念图的效果（如L码，和 XL码）(center,black,block,14)::并且每件衣服裁剪的程度不同也会存在同一尺码瓶子位置有偏差。(center,black,block,14)::综上，介意的亲慎重考虑后再下单，切勿因此产生不必要的麻烦，。![](TB11FXw3.jpg)![](TB11FXw4.jpg)![](TB11FXw5.jpg)![](TB11FXw6.jpg)![](TB11FXw7.jpg)![](TB11FXw8.jpg)![](TB11FXw9.jpg)![](TB11FXw10.jpg)(center,#e6232b,block,16)::Coca-Cola（コカ�9�9コーラ グッズ） ユニセックス Tシャツ ストローinボトル チャコール',107),
+  (2,'熙薇 浅口复古奶奶鞋','方头设计，演绎出英伦风。',1,'广东广州','O1CN01.jpg,O1CN02.jpg,O1CN03.jpg,O1CN04.jpg,O1CN05.jpg','![](1OaFGEj1.jpg)![](1OaFGEj2.jpg)![](1OaFGEj3.jpg)![](1OaFGEj4.jpg)![](1OaFGEj5.jpg)![](1OaFGEj6.jpg)![](1OaFGEj7.jpg)![](1OaFGEj8.jpg)![](1OaFGEj9.jpg)![](1OaFGEj10.jpg)![](1OaFGEj11.jpg)![](1OaFGEj12.jpg)![](1OaFGEj13.jpg)![](1OaFGEj14.jpg)![](1OaFGEj15.jpg)![](1OaFGEj16.jpg)',130),
   (3,'萌系卡通咖啡杯','创意立体可爱萌系动物陶瓷杯子马克杯带盖勺牛奶杯情侣茶水咖啡杯',1,'广东深圳','TB2jfzp.webp','等一下再写',132),
   (4,'大豆家 方头奶奶鞋','一脚蹬设计，方便日常的穿脱',1,'广东佛山','TB2TF0.webp','等一下再写',130),
   (5,'抱枕选的好，家的颜值大提升','北欧现代简约风格沙发靠垫办公室抱枕床头靠枕汽车靠包大靠背腰枕',1,'广东揭阳','TB2YJV.webp','等一下再写',131),
@@ -390,23 +462,25 @@ INSERT INTO `goods` VALUES
 UNLOCK TABLES;
 ```
 
+
+
 ```sql
 LOCK TABLES `goods_parameter` WRITE;
 INSERT INTO `goods_parameter` VALUES 
-  (1,1,'尺码'),
-  (2,1,'颜色')
+  (1,1,'尺码',0),
+  (2,1,'颜色',0);
 UNLOCK TABLES;
 ```
 
 ```sql
 LOCK TABLES `goods_parameter_option` WRITE;
 INSERT INTO `goods_parameter_option` VALUES 
-  (1,1,'S'),
-  (2,1,'M'),
-  (3,1,'XL'),
-  (4,2,'深灰色','TB1Ysu.jpg')
-  (5,2,'白色','TB1HrbB.jpg')
-  (6,2,'米色','TB1kqD.jpg')
+  (1,1,'S',null),
+  (2,1,'M',null),
+  (3,1,'XL',null),
+  (4,2,'深灰色','TB1Ysu.jpg'),
+  (5,2,'白色','TB1HrbB.jpg'),
+  (6,2,'米色','TB1kqD.jpg');
 UNLOCK TABLES;
 ```
 
@@ -425,26 +499,6 @@ INSERT INTO `goods_data` VALUES
 UNLOCK TABLES;
 ```
 
-```
-![](TB11FXw1.jpg)
-![](TB11FXw2.jpg)
-(center,black,block,14)::重要说明
-(center,black,block,14)::可乐瓶的位置随着尺码不同而不同，其原因咨询过专柜店长，答复如下：
-(center,black,block,14)::此款商品的工艺是先印染，再裁剪。
-(center,black,block,14)::所以尺码越小，瓶子月接近底部边线，甚至会有平底缺失（如S码无平底，M码平底压线）
-(center,black,block,14)::尺码越大，瓶子底部越远离底部边线，达到官方概念图的效果（如L码，和 XL码）
-(center,black,block,14)::并且每件衣服裁剪的程度不同也会存在同一尺码瓶子位置有偏差。
-(center,black,block,14)::综上，介意的亲慎重考虑后再下单，切勿因此产生不必要的麻烦，。
-![](TB11FXw3.jpg)
-![](TB11FXw4.jpg)
-![](TB11FXw5.jpg)
-![](TB11FXw6.jpg)
-![](TB11FXw7.jpg)
-![](TB11FXw8.jpg)
-![](TB11FXw9.jpg)
-![](TB11FXw10.jpg)
-(center,#e6232b,block,16)::Coca-Cola（コカ�9�9コーラ グッズ） ユニセックス Tシャツ ストローinボトル チャコール 
-```
 
 
 

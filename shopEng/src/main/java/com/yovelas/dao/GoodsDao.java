@@ -1,9 +1,6 @@
 package com.yovelas.dao;
 
-import com.yovelas.entity.Article;
-import com.yovelas.entity.Goods;
-import com.yovelas.entity.GoodsMainType;
-import com.yovelas.entity.GoodsSubType;
+import com.yovelas.entity.*;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Results;
@@ -30,6 +27,14 @@ public class GoodsDao {
         return sqlSession.selectList("com.yovelas.mapper.GoodsMapper.randSelectAllGoods");
     }
 
+    public List<Goods> selectGoodsListByKeyWord(String keyWord){
+        return sqlSession.selectList("com.yovelas.mapper.GoodsMapper.selectGoodsListByKeyWord", keyWord);
+    }
+
+    public Goods selectOneGoods(int goodsId){
+        return sqlSession.selectOne("com.yovelas.mapper.GoodsMapper.selectOneGoods", goodsId);
+    }
+
     public List<GoodsMainType> selectAllGoodsMainType(){
         return sqlSession.selectList("com.yovelas.mapper.GoodsMapper.selectAllGoodsMainType");
     }
@@ -46,9 +51,13 @@ public class GoodsDao {
         return sqlSession.selectList("com.yovelas.mapper.GoodsMapper.selectGoodsSubTypeByGoodsMainTypeId", goodsMainTypeId);
     }
 
+    public List<GoodsParameter> selectAllGoodsParameterByGoodsId(int goodsId){
+        return sqlSession.selectList("com.yovelas.mapper.GoodsMapper.selectAllGoodsParameterByGoodsId", goodsId);
+    }
 
-
-
+    public List<GoodsParameterOption> selectAllGoodsParameterOptionByParameterId(int goodsParameterId){
+        return sqlSession.selectList("com.yovelas.mapper.GoodsMapper.selectAllGoodsParameterOptionByParameterId", goodsParameterId);
+    }
 
 
 

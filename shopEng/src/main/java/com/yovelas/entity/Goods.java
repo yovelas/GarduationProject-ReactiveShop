@@ -13,9 +13,11 @@ public class Goods {
     private int goodsId;
     private String goodsName;
     private String goodsSubName;
-    private double goodsPrice;
-    private int goodsStore;
+    private String goodsPrice;
+    private int goodsInventory;
+    private String goodsSource;
     private String goodsPicture;
     private String goodsDescribe;
     private int goodsTypeId;
+
 }
