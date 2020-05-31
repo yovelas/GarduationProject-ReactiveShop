@@ -1,86 +1,3 @@
-<!-- # 数据库
-
--- 管理员信息表
-CREATE TABLE admin(
-admin_id int PRIMARY KEY AUTO_INCREMENT COMMENT '管理员ID',
-admin_name VARCHAR(50) not null COMMENT '管理员姓名',
-admin_pwd VARCHAR(50) not null COMMENT '管理员密码'
-);
-
-INSERT INTO admin VALUES(null,"admin","123456");
-
-
--- 用户信息表
-CREATE TABLE users(
-users_id int PRIMARY KEY AUTO_INCREMENT COMMENT '用户ID',
-users_name VARCHAR(50) not null COMMENT '用户名',
-users_pwd VARCHAR(50) not null COMMENT '用户密码'
-);
-
-INSERT INTO users VALUES(null,"张三","123456");
--- 商品类型
-CREATE TABLE goodstype(
-goodstype_id int PRIMARY KEY AUTO_INCREMENT COMMENT '类型ID',
-goodstype_name VARCHAR(50) not null COMMENT '商品类型'
-);
-
-
--- 商品信息
-
-CREATE TABLE goods(
-goods_id int PRIMARY KEY AUTO_INCREMENT COMMENT '商品ID',
-goods_name VARCHAR(50) not null COMMENT '商品名',
-goods_oprice DOUBLE not null COMMENT '原价',
-goods_price DOUBLE not null COMMENT '现价',
-goods_store int not null COMMENT '库存',
-goods_picture VARCHAR(50) COMMENT '图片',
-goods_describe VARCHAR(255) COMMENT '描述',
-goodstype_id int not null COMMENT '类型ID',
-FOREIGN KEY(goodstype_id) REFERENCES goodstype(goodstype_id)
-);
-
--- 购物车
-CREATE TABLE shopping(
-shopping_id int PRIMARY KEY AUTO_INCREMENT COMMENT '购物车ID',
-users_id int not null COMMENT '用户ID',
-goods_id  int not null COMMENT '商品ID',
-shoppingnum int not null COMMENT '购买数量',
-FOREIGN KEY(users_id) REFERENCES users(users_id),
-FOREIGN KEY(goods_id) REFERENCES goods(goods_id)
-);
-
-
--- 关注表
-CREATE TABLE focus(
-focus_id int PRIMARY KEY AUTO_INCREMENT COMMENT 'ID',
-users_id int not null COMMENT '用户ID',
-goods_id  int not null COMMENT '商品ID',
-focus_time datetime not null COMMENT '关注时间',
-FOREIGN KEY(users_id) REFERENCES users(users_id),
-FOREIGN KEY(goods_id) REFERENCES goods(goods_id)
-);
-
--- 订单基础表
-CREATE TABLE orderbasis(
-orderbasis_id int PRIMARY KEY AUTO_INCREMENT COMMENT '订单ID',
-users_id int not null COMMENT '用户ID',
-amount DOUBLE not null COMMENT '金额',
-status int not null COMMENT '状态',
-orderdate datetime not null COMMENT '下单时间',
-FOREIGN KEY(users_id) REFERENCES users(users_id),
-);
-
--- 订单详情表
-CREATE TABLE orders(
-orders_id int PRIMARY KEY AUTO_INCREMENT COMMENT 'ID',
-orderbasis_id int not NULL COMMENT '订单ID',
-goods_id  int not null COMMENT '商品ID',
-shoppingnum int not null COMMENT '购买数量',
-FOREIGN KEY(goods_id) REFERENCES goods(goods_id),
-FOREIGN KEY(orderbasis_id) REFERENCES orderbasis(orderbasis_id)
-);
- -->
-
 # 前端数据
 
 商品列表
@@ -99,12 +16,6 @@ FOREIGN KEY(orderbasis_id) REFERENCES orderbasis(orderbasis_id)
 ]
 ```
 
-红色-S 80
-红色-M 90
-红色-L 90
-红色-XL 90
-红色-2XL 90
-黄色-S 85
 
 
 # DOME
@@ -305,53 +216,6 @@ CREATE TABLE users_contact (
 );
 ```
 
-```sql
-INSERT INTO users
-VALUES (1, 'hari', '托马斯小小买家', '1231', 'users-hari.jpg'
-		, now()),
-	(2, 'calvin', '葛东琪的小毛驴', '1232', 'users-calvin.jpg'
-		, now()),
-	(3, 'jon', '旺仔小乔', '1233', 'users-jon.png'
-		, now()),
-	(4, 'kenda', '毛病陈同学', '1234', 'users-kenda.jpg'
-		, now()),
-	(5, 'lost', '三哈小杜', '1235', 'users-lost.jpg'
-		, now());
-
-
-INSERT INTO users_track
-VALUES (1, 1, 1, now());
-
-INSERT INTO users_track
-VALUES (2, 1, 2, now());
-
-INSERT INTO users_contact
-VALUES (1, 1, '17679391061', 'yovelas@163.com', '广东省广州市天河区珠吉路'
-	, now());
-
-
-SELECT u.user_id,u.user_name,u.user_nickname,u.user_password,u.user_picture,u.create_time
-FROM users u;
-
-
-SELECT t.user_track_id, t.goods_id,t.create_time
-FROM users_track t
-WHERE user_id = #{userId};
-
-SELECT c.user_contact_id, c.user_phone, c.user_email, user_address, c.create_time
-FROM users_contact c
-WHERE user_id = #{userId};
-
-SELECT o.order_id, o.goods_id, o.goods_data_id, o.order_status, o.user_contact
-	, shopping_num
-FROM orders o
-WHERE o.user_id = #{userId};
-
-
-
-select * from goods_data where id=#{id}
-
-```
 
 
 # SQL
@@ -488,6 +352,24 @@ FROM shopping s
 	JOIN goods_data d ON s.goods_data_id = d.id
 
 
+SELECT u.user_id,u.user_name,u.user_nickname,u.user_password,u.user_picture,u.create_time
+FROM users u;
+
+
+SELECT t.user_track_id, t.goods_id,t.create_time
+FROM users_track t
+WHERE user_id = #{userId};
+
+SELECT c.user_contact_id, c.user_phone, c.user_email, user_address, c.create_time
+FROM users_contact c
+WHERE user_id = #{userId};
+
+SELECT o.order_id, o.goods_id, o.goods_data_id, o.order_status, o.user_contact
+	, shopping_num
+FROM orders o
+WHERE o.user_id = #{userId};
+
+select * from goods_data where id=#{id}
 ```
 
 # SQL with Mapper
@@ -866,35 +748,6 @@ INSERT INTO `goods_data` VALUES
   (6,1,'{1:3,2:5}',349,30),
   (7,1,'{1:1,2:6}',352,30),
   (8,1,'{1:2,2:6}',356,30),
-
-
-  (4,'大豆家 方头奶奶鞋','一脚蹬设计，方便日常的穿脱',1,'广东佛山','TB2TF0.webp','等一下再写',130),
-
-
-  (5,'抱枕选的好，家的颜值大提升','北欧现代简约风格沙发靠垫办公室抱枕床头靠枕汽车靠包大靠背腰枕',1,'广东揭阳','TB2YJV.webp','等一下再写',131),
-
-
-  (6,'没有脚的信凳 独特得不可思议','吱音原创 信凳创意北欧设计水曲柳全实木矮凳子家具个性板凳',1,'广东东莞','TB2ASA.webp','等一下再写',133),
-
-  
-  (7,'甜美学院风连衣裙','很仙的情侣装夏装连衣裙海军领甜美学院风短袖上衣学生套装班服潮',1,'江西南昌','O1CN01NS.jpg','等一下再写',120),
-
-  
-  (8,'很仙的两件连衣裙','很仙的法式情侣装一裙一衣两件夏季同色系露肩连衣裙2020新款裙子',1,'湖南长沙','O1CN01k.jpg','等一下再写',120),
-
-  
-  (9,'简洁的桌面 给你一整天的舒畅','书立文件夹收纳盒办公桌书本收纳资料桌面文件框学生宿舍神器',1,'福建厦门','TB21yFr.webp','等一下再写',132),
-
-  
-  (10,'软皮奶奶鞋','方头单鞋女2020春新款平底浅口软皮奶奶鞋',1,'广西南宁','O1CN01j.webp','等一下再写',130),
-
-  
-  (11,'让我们来保护您的MacBook','macbookpro13苹果2020笔记本11电脑air13.3外壳12配件15保护壳mac',1,'广西柳州','TB1G7G.webp','等一下再写',29),
-
-  
-  (12,'儿童房也是颜值大担当','阿楹 飘窗小置物架玄关抽屉柜 ins实木北欧儿童房整理桌面收纳盒',1,'浙江温州','TB2Mk2.webp','等一下再写',132);
-
-  
 UNLOCK TABLES;
 ```
 
@@ -1238,4 +1091,32 @@ UNLOCK TABLES;
 insert into shopping values
   (1, 1, 1, 1, 3),
   (2, 1, 1, 2, 4);
+```
+
+
+
+## 用户
+
+```sql
+INSERT INTO users
+VALUES (1, 'hari', '托马斯小小买家', '1231', 'users-hari.jpg'
+		, now()),
+	(2, 'calvin', '葛东琪的小毛驴', '1232', 'users-calvin.jpg'
+		, now()),
+	(3, 'jon', '旺仔小乔', '1233', 'users-jon.png'
+		, now()),
+	(4, 'kenda', '毛病陈同学', '1234', 'users-kenda.jpg'
+		, now()),
+	(5, 'lost', '三哈小杜', '1235', 'users-lost.jpg'
+		, now());
+
+INSERT INTO users_track
+VALUES (1, 1, 1, now());
+
+INSERT INTO users_track
+VALUES (2, 1, 2, now());
+
+INSERT INTO users_contact
+VALUES (1, 1, '17679391061', 'yovelas@163.com', '广东省广州市天河区珠吉路'
+	, now());
 ```
