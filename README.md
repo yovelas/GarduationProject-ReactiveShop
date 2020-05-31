@@ -192,7 +192,6 @@ CREATE TABLE `goods_data` (
 ```
 
 
-
 ### 商品类型
 
 ```sql
@@ -226,86 +225,133 @@ CREATE TABLE `goods_type_main_with_sub_relationship` (
 ```
 
 
-### 购物车
+## 购物车
 
 ```sql
-CREATE TABLE shopping(
-shopping_id int PRIMARY KEY AUTO_INCREMENT COMMENT '购物车ID',
-users_id int not null COMMENT '用户ID',
-goods_id  int not null COMMENT '商品ID',
-shoppingnum int not null COMMENT '购买数量',
-FOREIGN KEY(users_id) REFERENCES users(users_id),
-FOREIGN KEY(goods_id) REFERENCES goods(goods_id)
+CREATE TABLE shopping (
+	shopping_id int PRIMARY KEY AUTO_INCREMENT COMMENT '购物车ID',
+	users_id int NOT NULL COMMENT '用户ID',
+	goods_id int NOT NULL COMMENT '商品ID',
+	goods_data_id int NOT NULL COMMENT '商品详情信息',
+	shopping_num int NOT NULL COMMENT '购买数量'
 );
 ```
+
+
+## 订单
 
 
 ### 订单基础表
 
 ```sql
-CREATE TABLE orderbasis(
-orderbasis_id int PRIMARY KEY AUTO_INCREMENT COMMENT '订单ID',
-users_id int not null COMMENT '用户ID',
-amount DOUBLE not null COMMENT '金额',
-status int not null COMMENT '状态',
-orderdate datetime not null COMMENT '下单时间',
-FOREIGN KEY(users_id) REFERENCES users(users_id),
+CREATE TABLE orders (
+	order_id int PRIMARY KEY AUTO_INCREMENT COMMENT '订单ID',
+	user_id int NOT NULL COMMENT '用户ID',
+	goods_id int NOT NULL COMMENT '商品ID',
+	goods_data_id int NOT NULL COMMENT '商品信息',
+	order_status int NOT NULL COMMENT '状态,0=取消交易,1=待付款,2=待发货,3=待收货,4=待评论,5=完成交易',
+	user_contact int NOT NULL COMMENT '用户联系方式',
+	shopping_num int NOT NULL COMMENT '购买数量',
+	create_time datetime NOT NULL COMMENT '下单时间'
 );
 ```
-
-### 订单详情表
 
 ```sql
-CREATE TABLE orders(
-orders_id int PRIMARY KEY AUTO_INCREMENT COMMENT 'ID',
-orderbasis_id int not NULL COMMENT '订单ID',
-goods_id  int not null COMMENT '商品ID',
-shoppingnum int not null COMMENT '购买数量',
-FOREIGN KEY(goods_id) REFERENCES goods(goods_id),
-FOREIGN KEY(orderbasis_id) REFERENCES orderbasis(orderbasis_id)
-);
+insert into orders values(1, 1, 1, 1, 1, 1, 3, now());
+insert into orders values(2, 1, 1, 2, 2, 1, 5, now());
+insert into orders values(3, 1, 2, 2, 3, 1, 5, now());
+insert into orders values(4, 1, 3, 6, 4, 1, 2, now());
+insert into orders values(5, 1, 4, 8, 5, 1, 8, now());
+insert into orders values(6, 1, 5, 9, 3, 1, 3, now());
 ```
+
+
+
+
 
 ## 用户相关
-
-
-### 管理员信息表
-
-```sql
-CREATE TABLE admin(
-admin_id int PRIMARY KEY AUTO_INCREMENT COMMENT '管理员ID',
-admin_name VARCHAR(50) not null COMMENT '管理员姓名',
-admin_pwd VARCHAR(50) not null COMMENT '管理员密码'
-);
-
-INSERT INTO admin VALUES(null,"admin","123456");
-```
 
 
 ### 用户信息表
 
 ```sql
-CREATE TABLE users(
-users_id int PRIMARY KEY AUTO_INCREMENT COMMENT '用户ID',
-users_name VARCHAR(50) not null COMMENT '用户名',
-users_pwd VARCHAR(50) not null COMMENT '用户密码'
+CREATE TABLE users (
+	user_id int PRIMARY KEY AUTO_INCREMENT COMMENT '用户ID',
+	user_name VARCHAR(500) NOT NULL COMMENT '用户名',
+	user_nickname VARCHAR(500) NOT NULL COMMENT '用户昵称',
+	user_password VARCHAR(500) NOT NULL COMMENT '用户密码',
+	user_picture VARCHAR(500) NOT NULL COMMENT '用户图片',
+	create_time datetime NOT NULL COMMENT '用户创建时间'
 );
 ```
-
-
-### 关注表
 
 ```sql
-CREATE TABLE focus(
-focus_id int PRIMARY KEY AUTO_INCREMENT COMMENT 'ID',
-users_id int not null COMMENT '用户ID',
-goods_id  int not null COMMENT '商品ID',
-focus_time datetime not null COMMENT '关注时间',
-FOREIGN KEY(users_id) REFERENCES users(users_id),
-FOREIGN KEY(goods_id) REFERENCES goods(goods_id)
+CREATE TABLE users_track (
+	user_track_id int PRIMARY KEY AUTO_INCREMENT COMMENT '用户足迹ID',
+	user_id int NOT NULL COMMENT '用户ID',
+	goods_id int NOT NULL COMMENT '浏览的商品',
+	create_time datetime NOT NULL COMMENT '创建时间'
 );
 ```
 
+```sql
+CREATE TABLE users_contact (
+	user_contact_id int PRIMARY KEY AUTO_INCREMENT COMMENT '用户地址ID',
+	user_id int not null COMMENT '用户ID',
+	user_phone varchar(50) NOT NULL COMMENT '浏览商品',
+	user_email varchar(50) NOT NULL COMMENT '浏览商品',
+	user_address varchar(500) NOT NULL COMMENT '浏览商品',
+	create_time datetime NOT NULL COMMENT '用户密码'
+);
+```
+
+```sql
+INSERT INTO users
+VALUES (1, 'hari', '托马斯小小买家', '1231', 'users-hari.jpg'
+		, now()),
+	(2, 'calvin', '葛东琪的小毛驴', '1232', 'users-calvin.jpg'
+		, now()),
+	(3, 'jon', '旺仔小乔', '1233', 'users-jon.png'
+		, now()),
+	(4, 'kenda', '毛病陈同学', '1234', 'users-kenda.jpg'
+		, now()),
+	(5, 'lost', '三哈小杜', '1235', 'users-lost.jpg'
+		, now());
+
+
+INSERT INTO users_track
+VALUES (1, 1, 1, now());
+
+INSERT INTO users_track
+VALUES (2, 1, 2, now());
+
+INSERT INTO users_contact
+VALUES (1, 1, '17679391061', 'yovelas@163.com', '广东省广州市天河区珠吉路'
+	, now());
+
+
+SELECT u.user_id,u.user_name,u.user_nickname,u.user_password,u.user_picture,u.create_time
+FROM users u;
+
+
+SELECT t.user_track_id, t.goods_id,t.create_time
+FROM users_track t
+WHERE user_id = #{userId};
+
+SELECT c.user_contact_id, c.user_phone, c.user_email, user_address, c.create_time
+FROM users_contact c
+WHERE user_id = #{userId};
+
+SELECT o.order_id, o.goods_id, o.goods_data_id, o.order_status, o.user_contact
+	, shopping_num
+FROM orders o
+WHERE o.user_id = #{userId};
+
+
+
+select * from goods_data where id=#{id}
+
+```
 
 
 # SQL
@@ -433,10 +479,244 @@ SELECT goods_id, goods_name, goods_sub_name, goods_source, goods_picture
 FROM goods
 WHERE goods_id = 1;
 
+
+-- 根据用户id查询购物车及相关的信息
+SELECT s.shopping_id, s.users_id, s.goods_id, s.shoppingnum, g.goods_name
+	, g.goods_sub_name, goods_picture, d.goods_configuration, d.goods_price
+FROM shopping s
+	JOIN goods g ON s.goods_id = g.goods_id
+	JOIN goods_data d ON s.goods_data_id = d.id
+
+
+```
+
+# SQL with Mapper
+
+
+## 商品
+
+```java
+@Results({
+  @Result(property = "goodsId",column = "goods_id"),
+  @Result(property = "goodsName",column = "goods_name"),
+  @Result(property = "goodsSubName",column = "goods_sub_name"),
+  @Result(property = "goodsPrice",column = "goods_price"),
+  @Result(property = "goodsInventory",column = "goods_inventory"),
+  @Result(property = "goodsSource",column = "goods_source"),
+  @Result(property = "goodsPicture",column = "goods_picture"),
+  @Result(property = "goodsDescribe",column = "goods_describe"),
+  @Result(property = "goodsTypeId",column = "goods_type_id")})
+```
+
+**selectAllGoods**
+
+```sql
+SELECT g.goods_id, g.goods_name, g.goods_sub_name, g.goods_source, g.goods_picture
+	, g.goods_describe, g.goods_type_id
+	, (
+		SELECT Concat(MIN(goods_price), '-', MAX(goods_price))
+		FROM goods_data
+		WHERE goods_id = 1
+	) AS goods_price
+	, (
+		SELECT SUM(goods_inventory)
+		FROM goods_data
+		WHERE goods_id = 1
+	) AS goods_inventory
+FROM goods g
+ORDER BY g.goods_id;
 ```
 
 
+**randSelectAllGoods**
 
+```sql
+SELECT g.goods_id, g.goods_name, g.goods_sub_name, g.goods_source, g.goods_picture
+	, g.goods_describe, g.goods_type_id
+	, (
+		SELECT Concat(MIN(goods_price), '-', MAX(goods_price))
+		FROM goods_data
+		WHERE goods_id = 1
+	) AS goods_price
+	, (
+		SELECT SUM(goods_inventory)
+		FROM goods_data
+		WHERE goods_id = 1
+	) AS goods_inventory
+FROM goods g
+ORDER BY rand()
+LIMIT 12;
+```
+
+
+**selectGoodsListByKeyWord**
+
+```sql
+SELECT g.goods_id, g.goods_name, g.goods_sub_name, g.goods_source, g.goods_picture
+	, g.goods_describe, g.goods_type_id
+	, (
+		SELECT Concat(MIN(goods_price), '-', MAX(goods_price))
+		FROM goods_data
+		WHERE goods_id = 1
+	) AS goods_price
+	, (
+		SELECT SUM(goods_inventory)
+		FROM goods_data
+		WHERE goods_id = 1
+	) AS goods_inventory
+FROM goods g
+	JOIN goods_sub_type s ON g.goods_type_id = goods_sub_type_id
+	JOIN goods_type_main_with_sub_relationship r ON r.goods_type_main_with_sub_relationship_id = s.goods_sub_type_id
+	JOIN goods_main_type m ON r.goods_type_main_with_sub_relationship_main_id = m.goods_main_type_id
+WHERE (g.goods_name LIKE #{keyWord}
+	OR g.goods_sub_name LIKE #{keyWord}
+	OR g.goods_describe LIKE #{keyWord}
+	OR s.goods_sub_type_name LIKE #{keyWord}
+	OR m.goods_main_type_name LIKE #{keyWord});
+```
+
+
+**selectOneGoods**
+
+```sql
+SELECT g.goods_id, g.goods_name, g.goods_sub_name, g.goods_source, g.goods_picture
+	, g.goods_describe, g.goods_type_id
+	, (
+		SELECT Concat(MIN(goods_price), '-', MAX(goods_price))
+		FROM goods_data
+		WHERE goods_id = 1
+	) AS goods_price
+	, (
+		SELECT SUM(goods_inventory)
+		FROM goods_data
+		WHERE goods_id = 1
+	) AS goods_inventory
+FROM goods g
+WHERE g.goods_id = #{goodsId};
+```
+
+**selectGoodsByGoodsSubType**
+
+```sql
+SELECT g.goods_id, g.goods_name, g.goods_sub_name, g.goods_source, g.goods_picture
+	, g.goods_describe, g.goods_type_id
+	, (
+		SELECT Concat(MIN(goods_price), '-', MAX(goods_price))
+		FROM goods_data
+		WHERE goods_id = 1
+	) AS goods_price
+	, (
+		SELECT SUM(goods_inventory)
+		FROM goods_data
+		WHERE goods_id = 1
+	) AS goods_inventory
+FROM goods g
+WHERE g.goods_type_id = #{goodsSubTypeId};
+```
+
+
+## 父类型
+
+```java
+@Results({
+  @Result(property = "goodsMainTypeId",column = "goods_main_type_id"),
+  @Result(property = "goodsMainTypeName",column = "goods_main_type_name"),
+  @Result(property = "goodsMainTypePicture",column = "goods_main_type_picture")})
+```
+
+**selectAllGoodsMainType**
+
+```sql
+SELECT *
+FROM goods_main_type
+```
+
+
+## 子类型
+
+```java
+@Results({
+  @Result(property = "goodsSubTypeId",column = "goods_sub_type_id"),
+  @Result(property = "goodsSubTypeName",column = "goods_sub_type_name"),
+  @Result(property = "goodsSubTypePicture",column = "goods_sub_type_picture")})
+```
+
+**selectAllGoodsSubType**
+
+```sql
+SELECT *
+FROM goods_sub_typee
+```
+
+**selectGoodsSubTypeByGoodsMainTypeId**
+
+```sql
+SELECT *
+FROM goods_sub_type
+WHERE goods_sub_type_id IN (
+	SELECT goods_type_main_with_sub_relationship_sub_id
+	FROM goods_type_main_with_sub_relationship r
+	WHERE r.goods_type_main_with_sub_relationship_main_id = #{goodsMainTypeId}
+);
+```
+
+
+## 参数
+
+```java
+@Results({
+  @Result(property = "id",column = "id"),
+  @Result(property = "goodsId",column = "goods_id"),
+  @Result(property = "goodsParameter",column = "goods_parameter"),
+  @Result(property = "goodsOptional",column = "goods_optional")})
+```
+**selectAllGoodsParameterByGoodsId**
+
+```sql
+SELECT *
+FROM goods_parameter
+WHERE goods_id = #{goodsId};
+```
+
+## 参数选项
+```java
+@Results({
+  @Result(property = "id",column = "id"),
+  @Result(property = "goodsParameterId",column = "goods_parameter_id"),
+  @Result(property = "goodsOption",column = "goods_option"),
+  @Result(property = "goodsPicture",column = "goods_picture")})
+```
+
+**selectAllGoodsParameterOptionByParameterId**
+
+```sql
+SELECT *
+FROM goods_parameter_option
+WHERE goods_parameter_id = #{goodsParameterId};
+```
+
+
+## 用户
+
+```java
+@Results({
+  @Result(property = "userId",column = "user_id"),
+  @Result(property = "goodsId",column = "user_name"),
+  @Result(property = "goodsParameter",column = "user_nickname"),
+  @Result(property = "goodsOptional",column = "user_password"),
+  @Result(property = "goodsOptional",column = "user_picture"),
+  @Result(property = "goodsOptional",column = "create_time")})
+```
+
+
+**selectUserByUserId**
+
+```sql
+SELECT u.user_id, u.user_name, u.user_nickname, u.user_password, u.user_picture
+	, u.create_time
+FROM users u
+WHERE user_id = #{userId}
+```
 
 
 # 测试数据
@@ -449,16 +729,172 @@ LOCK TABLES `goods` WRITE;
 INSERT INTO `goods` VALUES 
   (1,'Coca-Cola 可乐瓶T恤','简约的纯色基调，宣扬自由轻松的休闲氛围。',1,'日本','SZFvXXaT1.jpg,SZFvXXaT2.jpg,SZFvXXaT3.jpg,SZFvXXaT4.jpg,SZFvXXaT5.jpg','![](TB11FXw1.jpg)![](TB11FXw2.jpg)(center,black,block,14)::重要说明(center,black,block,14)::可乐瓶的位置随着尺码不同而不同，其原因咨询过专柜店长，答复如下：(center,black,block,14)::此款商品的工艺是先印染，再裁剪。(center,black,block,14)::所以尺码越小，瓶子月接近底部边线，甚至会有平底缺失（如S码无平底，M码平底压线）(center,black,block,14)::尺码越大，瓶子底部越远离底部边线，达到官方概念图的效果（如L码，和 XL码）(center,black,block,14)::并且每件衣服裁剪的程度不同也会存在同一尺码瓶子位置有偏差。(center,black,block,14)::综上，介意的亲慎重考虑后再下单，切勿因此产生不必要的麻烦，。![](TB11FXw3.jpg)![](TB11FXw4.jpg)![](TB11FXw5.jpg)![](TB11FXw6.jpg)![](TB11FXw7.jpg)![](TB11FXw8.jpg)![](TB11FXw9.jpg)![](TB11FXw10.jpg)(center,#e6232b,block,16)::Coca-Cola（コカ�9�9コーラ グッズ） ユニセックス Tシャツ ストローinボトル チャコール',107),
   (2,'熙薇 浅口复古奶奶鞋','方头设计，演绎出英伦风。',1,'广东广州','O1CN01.jpg,O1CN02.jpg,O1CN03.jpg,O1CN04.jpg,O1CN05.jpg','![](1OaFGEj1.jpg)![](1OaFGEj2.jpg)![](1OaFGEj3.jpg)![](1OaFGEj4.jpg)![](1OaFGEj5.jpg)![](1OaFGEj6.jpg)![](1OaFGEj7.jpg)![](1OaFGEj8.jpg)![](1OaFGEj9.jpg)![](1OaFGEj10.jpg)![](1OaFGEj11.jpg)![](1OaFGEj12.jpg)![](1OaFGEj13.jpg)![](1OaFGEj14.jpg)![](1OaFGEj15.jpg)![](1OaFGEj16.jpg)',130),
-  (3,'萌系卡通咖啡杯','创意立体可爱萌系动物陶瓷杯子马克杯带盖勺牛奶杯情侣茶水咖啡杯',1,'广东深圳','TB2jfzp.webp','等一下再写',132),
+  (3,'萌系卡通咖啡杯','创意立体可爱萌系动物陶瓷杯子马克杯带盖勺牛奶杯情侣茶水咖啡杯',1,'广东深圳','TB2jfzp.webp,TB2jfzp2.jpg,TB2jfzp3.jpg,TB2jfzp4.jpg,TB2jfzp5.jpg','![](Vbv61vpi1.jpg)![](Vbv61vpi2.jpg)![](Vbv61vpi3.jpg)![](Vbv61vpi4.jpg)![](Vbv61vpi5.jpg)![](Vbv61vpi6.jpg)![](Vbv61vpi7.jpg)![](Vbv61vpi8.jpg)![](Vbv61vpi9.jpg)![](Vbv61vpi10.jpg)![](Vbv61vpi11.jpg)![](Vbv61vpi12.jpg)![](Vbv61vpi13.jpg)![](Vbv61vpi14.jpg)![](Vbv61vpi15.jpg)![](Vbv61vpi16.jpg)![](Vbv61vpi17.jpg)',132),
+  (4,'大豆家 方头奶奶鞋','软底单鞋女2020新款韩版复古豆豆鞋百搭网红一脚蹬仙女气质奶奶鞋',1,'广东佛山','TB2TF0.jpg,TB2TF01.jpg,TB2TF03.jpg,TB2TF03.jpg,TB2TF04.jpg','![](Ar2DlI9dd1.jpg)![](Ar2DlI9dd2.jpg)![](Ar2DlI9dd3.jpg)![](Ar2DlI9dd4.jpg)![](Ar2DlI9dd5.jpg)![](Ar2DlI9dd6.jpg)![](Ar2DlI9dd7.jpg)![](Ar2DlI9dd8.jpg)![](Ar2DlI9dd9.jpg)![](Ar2DlI9dd10.jpg)![](Ar2DlI9dd11.jpg)![](Ar2DlI9dd12.jpg)![](Ar2DlI9dd13.jpg)![](Ar2DlI9dd14.jpg)![](Ar2DlI9dd15.jpg)![](Ar2DlI9dd16.jpg)![](Ar2DlI9dd17.jpg)![](Ar2DlI9dd18.jpg)![](Ar2DlI9dd19.jpg)![](Ar2DlI9dd20.jpg)![](Ar2DlI9dd21.jpg)![](Ar2DlI9dd22.jpg)![](Ar2DlI9dd23.jpg)![](Ar2DlI9dd24.jpg)![](Ar2DlI9dd25.jpg)',130),
+  (5,'抱枕选的好，家的颜值大提升','北欧现代简约风格沙发靠垫办公室抱枕床头靠枕汽车靠包大靠背腰枕',1,'广东揭阳','TB2YJV.webp,TB2YJV1.jpg,TB2YJV2.jpg,TB2YJV3.jpg,TB2YJV4.jpg','![](Fl0FeXXcJ.jpg)',131),
+  (6,'没有脚的信凳 独特得不可思议','吱音原创 信凳创意北欧设计水曲柳全实木矮凳子家具个性板凳',1,'广东东莞','TB2ASA.webp,TB2ASA1.jpg,TB2ASA2.jpg,TB2ASA3.jpg,TB2ASA4.jpg','![](AJ1t8YLrUE1.jpg)![](AJ1t8YLrUE2.jpg)![](AJ1t8YLrUE3.jpg)![](AJ1t8YLrUE4.jpg)![](AJ1t8YLrUE5.jpg)![](AJ1t8YLrUE6.jpg)![](AJ1t8YLrUE7.jpg)![](AJ1t8YLrUE8.jpg)![](AJ1t8YLrUE9.jpg)![](AJ1t8YLrUE10.jpg)![](AJ1t8YLrUE11.jpg)![](AJ1t8YLrUE12.jpg)',133),
+  (7,'甜美学院风连衣裙','很仙的情侣装夏装连衣裙海军领甜美学院风短袖上衣学生套装班服潮',1,'江西南昌','O1CN01NS.jpg,O1CN01NS1.jpg,O1CN01NS2.jpg,O1CN01NS3.jpg,O1CN01NS4.jpg','![](1pwM8751.jpg)![](1pwM8752.jpg)![](1pwM8753.jpg)![](1pwM8754.jpg)![](1pwM8755.jpg)![](1pwM8756.jpg)![](1pwM8757.jpg)![](1pwM8758.jpg)![](1pwM8759.jpg)![](1pwM87510.jpg)![](1pwM87511.jpg)![](1pwM87512.jpg)![](1pwM87513.jpg)![](1pwM87514.jpg)![](1pwM87515.jpg)![](1pwM87516.jpg)![](1pwM87517.jpg)![](1pwM87518.jpg)![](1pwM87519.jpg)![](1pwM87520.jpg)![](1pwM87521.jpg)',120),
+  (8,'很仙的两件连衣裙','很仙的法式情侣装一裙一衣两件夏季同色系露肩连衣裙2020新款裙子',1,'湖南长沙','O1CN01k.jpg,O1CN01k1.jpg,O1CN01k2.jpg,O1CN01k3.jpg,O1CN01k4.jpg','![](1JJ4LNR4h1.jpg)![](1JJ4LNR4h2.jpg)![](1JJ4LNR4h3.jpg)![](1JJ4LNR4h4.jpg)![](1JJ4LNR4h5.jpg)![](1JJ4LNR4h6.jpg)![](1JJ4LNR4h7.jpg)![](1JJ4LNR4h8.jpg)![](1JJ4LNR4h9.jpg)![](1JJ4LNR4h10.jpg)![](1JJ4LNR4h11.jpg)![](1JJ4LNR4h12.jpg)![](1JJ4LNR4h13.jpg)![](1JJ4LNR4h14.jpg)![](1JJ4LNR4h15.jpg)![](1JJ4LNR4h16.jpg)',120),
+  (9,'简洁的桌面 给你一整天的舒畅','书立文件夹收纳盒办公桌书本收纳资料桌面文件框学生宿舍神器',1,'福建厦门','TB21yFr.webp,TB21yFr1.jpg,TB21yFr2.jpg,TB21yFr3.jpg,TB21yFr4.jpg','![](wlfwijvvw1.jpg)![](wlfwijvvw2.jpg)![](wlfwijvvw3.jpg)![](wlfwijvvw4.jpg)',132),
+  (10,'软皮奶奶鞋','方头单鞋女2020春新款平底浅口软皮奶奶鞋',1,'广西南宁','O1CN01j.webp,O1CN01j1.png,O1CN01j2.png,O1CN01j3.png,O1CN01j4.png','![](kjfowjf1.png)![](kjfowjf2.jpg)![](kjfowjf3.jpg)(center,#b22222,block,48)::软趴趴~![](kjfowjf4.gif)(center,#b22222,block,48)::Q弹~![](kjfowjf5.gif)(center,#b22222,block,48)::超防滑~![](kjfowjf6.gif)![](kjfowjf7.png)![](kjfowjf8.png)![](kjfowjf9.png)![](kjfowjf10.png)![](kjfowjf11.png)![](kjfowjf12.png)![](kjfowjf13.png)![](kjfowjf14.png)',130),
+  (11,'让我们来保护您的MacBook','macbookpro13苹果2020笔记本11电脑air13.3外壳12配件15保护壳mac',1,'广西柳州','TB1G7G.webp,TB1G7G1.jpg,TB1G7G2.jpg,TB1G7G3.jpg,TB1G7G4.jpg','![](FjppbXXXa1.jpg)![](FjppbXXXa2.jpg)![](FjppbXXXa3.jpg)![](FjppbXXXa4.jpg)![](FjppbXXXa5.jpg)![](FjppbXXXa7.jpg)![](FjppbXXXa8.jpg)![](FjppbXXXa9.jpg)![](FjppbXXXa10.jpg)![](FjppbXXXa11.jpg)![](FjppbXXXa12.jpg)![](FjppbXXXa13.jpg)![](FjppbXXXa14.jpg)![](FjppbXXXa15.jpg)![](FjppbXXXa16.jpg)',29),
+  (12,'儿童房也是颜值大担当','阿楹 飘窗小置物架玄关抽屉柜 ins实木北欧儿童房整理桌面收纳盒',1,'浙江温州','TB2Mk2.webp,TB2Mk21.jpg,TB2Mk23.jpg,TB2Mk23.jpg,TB2Mk24.jpg','![](iMmsyUHM1.jpg)![](iMmsyUHM2.jpg)![](iMmsyUHM3.jpg)![](iMmsyUHM4.jpg)![](iMmsyUHM5.jpg)![](iMmsyUHM6.jpg)![](iMmsyUHM7.jpg)![](iMmsyUHM8.jpg)![](iMmsyUHM9.jpg)![](iMmsyUHM10.jpg)![](iMmsyUHM11.jpg)![](iMmsyUHM12.jpg)![](iMmsyUHM13.jpg)![](iMmsyUHM14.jpg)![](iMmsyUHM15.jpg)![](iMmsyUHM16.jpg)![](iMmsyUHM17.jpg)![](iMmsyUHM18.jpg)![](iMmsyUHM19.jpg)![](iMmsyUHM20.jpg)![](iMmsyUHM21.jpg)![](iMmsyUHM22.jpg)![](iMmsyUHM23.jpg)![](iMmsyUHM24.jpg)![](iMmsyUHM25.jpg)![](iMmsyUHM26.jpg)',132);
+UNLOCK TABLES;
+```
+
+
+
+```sql
+LOCK TABLES `goods_parameter` WRITE;
+INSERT INTO `goods_parameter` VALUES 
+  (1,1,'尺码',0),
+  (2,1,'颜色',0),
+  (3,2,'尺码',0),
+  (4,2,'颜色',0),
+  (5,3,'颜色',0),
+  (6,4,'尺码',0),
+  (7,4,'颜色',0),
+  (8,5,'尺寸',0),
+  (9,5,'颜色',0),
+  (10,6,'颜色',0),
+  (11,7,'尺码',0),
+  (12,7,'颜色',0),
+  (13,8,'尺码',0),
+  (14,8,'颜色',0),
+  (15,9,'颜色',0),
+  (16,10,'尺寸',0),
+  (17,10,'颜色',0),
+  (18,11,'颜色',0),
+  (19,12,'颜色',0);
+UNLOCK TABLES;
+```
+
+```sql
+LOCK TABLES `goods_parameter_option` WRITE;
+INSERT INTO `goods_parameter_option` VALUES 
+  (1,1,'S',null),
+  (2,1,'M',null),
+  (3,1,'XL',null),
+  (4,2,'深灰色','TB1Ysu.jpg'),
+  (5,2,'白色','TB1HrbB.jpg'),
+  (6,2,'米色','TB1kqD.jpg'),
+  (7,3,'33',null),
+  (8,3,'34',null),
+  (9,3,'35',null),
+  (10,3,'36',null),
+  (11,3,'37',null),
+  (12,3,'38',null),
+  (13,3,'39',null),
+  (14,3,'40',null),
+  (15,3,'41',null),
+  (16,4,'杏色','NaPheNy1.jpg'),
+  (17,4,'黑色','NaPheNy2.jpg'),
+  (18,4,'棕色','NaPheNy3.jpg'),
+  (19,4,'米白色','NaPheNy4.jpg'),
+  (20,5,'齿轮杯-斑马','jwojfj291.jpg'),
+  (21,5,'齿轮杯-免子','jwojfj292.jpg'),
+  (22,5,'齿轮杯-小狗','jwojfj293.jpg'),
+  (23,6,'35',null),
+  (24,6,'36',null),
+  (25,6,'37',null),
+  (26,6,'38',null),
+  (27,6,'39',null),
+  (28,6,'40',null),
+  (29,7,'黑色','O1CN01iM1.jpg'),
+  (30,7,'咖色','O1CN01iM2.jpg'),
+  (31,8,'45x45',null),
+  (32,8,'40x60',null),
+  (33,8,'35x70',null),
+  (34,8,'50x50',null),
+  (35,9,'绿色格子','BScXlwf1.jpg'),
+  (36,9,'浅灰色','BScXlwf2.jpg'),
+  (37,9,'黄色格式','BScXlwf3.jpg'),
+  (38,9,'长腰枕','BScXlwf4.jpg'),
+  (39,10,'木原色','doqpwnHSd1.jpg'),
+  (40,10,'茶棕色','doqpwnHSd2.jpg'),
+  (41,10,'墨灰色','doqpwnHSd3.jpg'),
+  (42,11,'S',null),
+  (43,11,'M',null),
+  (44,11,'L',null),
+  (45,11,'XL',null),
+  (46,11,'2XL',null),
+  (47,11,'3XL',null),
+  (48,12,'女裙',null),
+  (49,12,'男T',null),
+  (50,12,'男装套装',null),
+  (51,12,'情侣套装',null),
+  (52,13,'S',null),
+  (53,13,'M',null),
+  (54,13,'L',null),
+  (55,13,'XL',null),
+  (56,13,'2XL',null),
+  (57,13,'3XL',null),
+  (58,14,'女连衣裙','joqjOrw1.jpg'),
+  (59,14,'男T恤','joqjOrw2.jpg'),
+  (60,14,'男九分裤','joqjOrw3.jpg'),
+  (61,15,'白色','wofjWrO1.jpg'),
+  (62,15,'灰色','wofjWrO2.jpg'),
+  (63,15,'灰+白色','wofjWrO3.jpg'),
+  (64,16,'34',null),
+  (65,16,'35',null),
+  (66,16,'36',null),
+  (67,16,'37',null),
+  (68,16,'38',null),
+  (69,16,'39',null),
+  (70,16,'40',null),
+  (71,17,'杏色',null),
+  (72,17,'米白色',null),
+  (73,18,'沙滩酒红','OwjrNSlPw1.jpg'),
+  (74,18,'沙滩粉红','OwjrNSlPw2.jpg'),
+  (75,18,'沙滩黑色','OwjrNSlPw3.jpg'),
+  (76,18,'沙滩棕色','OwjrNSlPw4.jpg'),
+  (77,18,'沙滩天青色','OwjrNSlPw5.jpg'),
+  (78,19,'童话绘本装套','WovJoPw1.jpg'),
+  (79,19,'海边积云','WovJoPw2.jpg'),
+  (80,19,'童话绘本','WovJoPw3.jpg');
+UNLOCK TABLES;
+```
+
+```sql
+LOCK TABLES `goods_data` WRITE;
+INSERT INTO `goods_data` VALUES 
+  (1,1,'{1:1,2:4}',340,30),
+  (2,1,'{1:2,2:4}',342,30),
+  (3,1,'{1:3,2:4}',344,30),
+  (4,1,'{1:1,2:5}',345,30),
+  (5,1,'{1:2,2:5}',348,30),
+  (6,1,'{1:3,2:5}',349,30),
+  (7,1,'{1:1,2:6}',352,30),
+  (8,1,'{1:2,2:6}',356,30),
+
+
   (4,'大豆家 方头奶奶鞋','一脚蹬设计，方便日常的穿脱',1,'广东佛山','TB2TF0.webp','等一下再写',130),
+
+
   (5,'抱枕选的好，家的颜值大提升','北欧现代简约风格沙发靠垫办公室抱枕床头靠枕汽车靠包大靠背腰枕',1,'广东揭阳','TB2YJV.webp','等一下再写',131),
+
+
   (6,'没有脚的信凳 独特得不可思议','吱音原创 信凳创意北欧设计水曲柳全实木矮凳子家具个性板凳',1,'广东东莞','TB2ASA.webp','等一下再写',133),
+
+  
   (7,'甜美学院风连衣裙','很仙的情侣装夏装连衣裙海军领甜美学院风短袖上衣学生套装班服潮',1,'江西南昌','O1CN01NS.jpg','等一下再写',120),
+
+  
   (8,'很仙的两件连衣裙','很仙的法式情侣装一裙一衣两件夏季同色系露肩连衣裙2020新款裙子',1,'湖南长沙','O1CN01k.jpg','等一下再写',120),
+
+  
   (9,'简洁的桌面 给你一整天的舒畅','书立文件夹收纳盒办公桌书本收纳资料桌面文件框学生宿舍神器',1,'福建厦门','TB21yFr.webp','等一下再写',132),
+
+  
   (10,'软皮奶奶鞋','方头单鞋女2020春新款平底浅口软皮奶奶鞋',1,'广西南宁','O1CN01j.webp','等一下再写',130),
+
+  
   (11,'让我们来保护您的MacBook','macbookpro13苹果2020笔记本11电脑air13.3外壳12配件15保护壳mac',1,'广西柳州','TB1G7G.webp','等一下再写',29),
+
+  
   (12,'儿童房也是颜值大担当','阿楹 飘窗小置物架玄关抽屉柜 ins实木北欧儿童房整理桌面收纳盒',1,'浙江温州','TB2Mk2.webp','等一下再写',132);
+
+  
 UNLOCK TABLES;
 ```
 
@@ -498,11 +934,6 @@ INSERT INTO `goods_data` VALUES
   (9,1,'{1:3,2:6}',359,30);
 UNLOCK TABLES;
 ```
-
-
-
-
-
 
 
 ## 商品类型
@@ -798,4 +1229,13 @@ INSERT INTO `goods_type_main_with_sub_relationship` VALUES
   (132,3,132),
   (133,3,133);
 UNLOCK TABLES;
+```
+
+
+## 购物车
+
+```sql
+insert into shopping values
+  (1, 1, 1, 1, 3),
+  (2, 1, 1, 2, 4);
 ```

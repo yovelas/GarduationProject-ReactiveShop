@@ -2,15 +2,13 @@ package com.yovelas.entity;
 
 public class JsonResult {
 
-    public enum Massage{FAIL,SUCCESS}
-
     private int status;
-    private String massage;
+    private String message;
     private Object data;
 
     public JsonResult() {
-        this.status = 400;
-        this.massage = "FAIL";
+        this.status = -1;
+        this.message = "FAIL";
         this.data = null;
     }
 
@@ -19,20 +17,16 @@ public class JsonResult {
     }
 
     public JsonResult setStatus(int status) {
-        if(status != 200 && status != 400){
-            status = 400;
-        }else {
             this.status = status;
-        }
         return this;
     }
 
-    public String getMassage() {
-        return massage;
+    public String getMessage() {
+        return message;
     }
 
-    public JsonResult setMassage(String massage) {
-        this.massage = massage;
+    public JsonResult setMessage(String message) {
+        this.message = message;
         return  this;
     }
 
@@ -45,4 +39,3 @@ public class JsonResult {
         return this;
     }
 }
-

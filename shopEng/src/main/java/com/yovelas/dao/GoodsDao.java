@@ -40,7 +40,7 @@ public class GoodsDao {
     }
 
     public List<Goods> selectGoodsByGoodsSubType(int goodsSubTypeId){
-        return sqlSession.selectList("com.yovelas.mapper.GoodsMapper.selectGoodsByGoodsSubType");
+        return sqlSession.selectList("com.yovelas.mapper.GoodsMapper.selectGoodsByGoodsSubType", goodsSubTypeId);
     }
 
     public List<GoodsSubType> selectAllGoodsSubType(){
@@ -51,59 +51,23 @@ public class GoodsDao {
         return sqlSession.selectList("com.yovelas.mapper.GoodsMapper.selectGoodsSubTypeByGoodsMainTypeId", goodsMainTypeId);
     }
 
+    public List<GoodsParameter> selectAllGoodsParameterById(int id){
+        return sqlSession.selectList("com.yovelas.mapper.GoodsMapper.selectAllGoodsParameterById", id);
+    }
+
     public List<GoodsParameter> selectAllGoodsParameterByGoodsId(int goodsId){
         return sqlSession.selectList("com.yovelas.mapper.GoodsMapper.selectAllGoodsParameterByGoodsId", goodsId);
+    }
+
+    public List<GoodsParameterOption> selectAllGoodsParameterOptionById(int id){
+        return sqlSession.selectList("com.yovelas.mapper.GoodsMapper.selectAllGoodsParameterOptionById", id);
     }
 
     public List<GoodsParameterOption> selectAllGoodsParameterOptionByParameterId(int goodsParameterId){
         return sqlSession.selectList("com.yovelas.mapper.GoodsMapper.selectAllGoodsParameterOptionByParameterId", goodsParameterId);
     }
 
-
-
-
-
-
-
-    public List<Article> selectHotArticle(){
-        return sqlSession.selectList("com.yovelas.mapper.ArticleMapper.selectHotArticle");
-    }
-    public List<Article> selectArticleByUser(Map map){
-        return sqlSession.selectList("com.yovelas.mapper.ArticleMapper.selectArticleByUser",map);
-    }
-    public Article selectArticleById(int id){
-        return sqlSession.selectOne("com.yovelas.mapper.ArticleMapper.selectArticleById",id);
-    }
-
-    public int selectArticleCount(int id){
-        return sqlSession.selectOne("com.yovelas.mapper.ArticleMapper.selectArticleCount",id);
-    }
-
-    public Article selectSpecifyArticle(Article article){
-        return sqlSession.selectOne("com.yovelas.mapper.ArticleMapper.selectSpecifyArticle",article);
-    }
-
-    public List<Article> selectSpecifyClassfyArticle(int classfyId){
-        return sqlSession.selectList("com.yovelas.mapper.ArticleMapper.selectSpecifyClassfyArticle",classfyId);
-    }
-
-    public int insertArticle(Article article){
-        return sqlSession.insert("com.yovelas.mapper.ArticleMapper.insertArticle",article);
-    }
-
-    public int deleteArticle(int id){
-        return sqlSession.delete("com.yovelas.mapper.ArticleMapper.deleteArticle",id);
-    }
-
-    public int updateArticle(Article article){
-        return sqlSession.delete("com.yovelas.mapper.ArticleMapper.updateArticle",article);
-    }
-
-    public int addLikeArticle(int id){
-        return sqlSession.update("com.yovelas.mapper.ArticleMapper.addLikeArticle",id);
-    }
-
-    public int addReadArticle(int id){
-        return sqlSession.update("com.yovelas.mapper.ArticleMapper.addReadArticle",id);
+    public GoodsData selectGoodsDataById(int id){
+        return sqlSession.selectOne("com.yovelas.mapper.GoodsMapper.selectGoodsDataById", id);
     }
 }
