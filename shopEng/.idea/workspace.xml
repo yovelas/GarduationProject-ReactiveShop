@@ -2,8 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="93751770-0427-4922-80c7-42e4b32a070f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/yovelas/controller/OrderController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../README.md" beforeDir="false" afterPath="$PROJECT_DIR$/../README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Shop.iml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../blogEnd/.idea/.name" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../blogEnd/.idea/artifacts/blog_war.xml" beforeDir="false" />
@@ -447,29 +445,6 @@
       <change beforePath="$PROJECT_DIR$/../import_shop.sql" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../pom.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../shop.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/yovelas/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/yovelas/controller/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/yovelas/dao/GoodsDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/yovelas/dao/GoodsDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/yovelas/dao/OrderDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/yovelas/dao/OrderDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/yovelas/entity/GoodsData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/yovelas/entity/GoodsData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/yovelas/entity/Order.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/yovelas/entity/Order.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/yovelas/mapper/GoodsMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/yovelas/mapper/GoodsMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/yovelas/mapper/OrderMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/yovelas/mapper/OrderMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/yovelas/mapper/UserMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/yovelas/mapper/UserMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/yovelas/service/GoodsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/yovelas/service/GoodsService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/yovelas/service/OrderService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/yovelas/service/OrderService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/yovelas/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/yovelas/service/UserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/yovelas/controller/UserController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/yovelas/controller/UserController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/yovelas/dao/GoodsDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/yovelas/dao/GoodsDao.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/yovelas/entity/GoodsData.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/yovelas/entity/GoodsData.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/yovelas/entity/Order.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/yovelas/entity/Order.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/yovelas/mapper/GoodsMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/yovelas/mapper/GoodsMapper.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/yovelas/mapper/UserMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/yovelas/mapper/UserMapper.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/yovelas/service/GoodsService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/yovelas/service/GoodsService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/file/ wY9KyZyG1.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/file/ wY9KyZyG2.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/file/ wY9KyZyG3.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/file/ wY9KyZyG4.jpg" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../src/main/java/com/hopu/App.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../src/main/java/com/hopu/config/MybatisPlusConfig.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../src/main/java/com/hopu/controller/AdminController.java" beforeDir="false" />
