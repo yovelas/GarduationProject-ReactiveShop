@@ -81,7 +81,9 @@ public class GoodsService {
     }
 
     public Map selectOneGoods(int goodsId) throws IllegalAccessException {
-        return oneGoodsToMap(goodsDao.selectOneGoods(goodsId));
+        Map result = oneGoodsToMap(goodsDao.selectOneGoods(goodsId));
+        result.put("goodsData",goodsDao.selectGoodsDataByGoodsId(goodsId));
+        return result;
     }
 
     public List selectAllGoodsType() throws IllegalAccessException {

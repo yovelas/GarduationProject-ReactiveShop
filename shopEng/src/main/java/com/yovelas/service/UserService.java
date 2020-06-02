@@ -3,6 +3,7 @@ package com.yovelas.service;
 import com.yovelas.dao.OrderDao;
 import com.yovelas.dao.UserDao;
 import com.yovelas.entity.User;
+import com.yovelas.entity.UserContact;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +28,15 @@ public class UserService {
         user.setUserOrders(orderService.selectUserOrdersByUserId(userId));
         return user;
     }
+
+    public List<UserContact> selectUserContactsByUserId(int userId) {
+        return userDao.selectUserContactsByUserId(userId);
+    }
+
+
+
+
+
 
     public User getUserByName(String username) {
         return userDao.getUserByName(username);

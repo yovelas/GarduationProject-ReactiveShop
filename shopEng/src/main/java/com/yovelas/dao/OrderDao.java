@@ -18,6 +18,10 @@ public class OrderDao {
     public List<Order> selectUserOrdersByUserId(int userId) {
         return sqlSession.selectList("com.yovelas.mapper.UserMapper.selectUserOrdersByUserId", userId);
     }
+
+    public int insertOneUserOrders(Order order) {
+        return sqlSession.insert("com.yovelas.mapper.UserMapper.insertOneUserOrders", order);
+    }
 }
 
 

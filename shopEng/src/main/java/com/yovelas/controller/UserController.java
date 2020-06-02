@@ -31,28 +31,31 @@ public class UserController {
     }
 
     // 基于Session判断连接状态
-//    @CrossOrigin(allowCredentials="true")
-//    @GetMapping(path = "/")
-//    JsonResult user(HttpServletRequest req){
-//        JsonResult connected = isConnected(req);
-//        if(connected.getStatus() != 0) return connected;
-//        HttpSession session = req.getSession();
-//        User user = (User)session.getAttribute("user");
-//        return new JsonResult().setStatus(0).setMessage("ok").setData(userService.getUserByName(user.getUsername()));
-//    }
-
-    // 基于Session判断连接状态
     @CrossOrigin(allowCredentials="true")
     @GetMapping(path = "/isconnected")
-    JsonResult isConnectedI(HttpServletRequest req){
-        return isConnected(req);
+    JsonResult isConnected(HttpServletRequest req) throws IllegalAccessException {
+        HttpSession session = req.getSession();
+        JsonResult jsonResult = new JsonResult();
+        if (session.getAttribute("user")!=null) return jsonResult.setStatus(0).setMessage("Is connected").setData(oneUser(((User)session.getAttribute("user")).getUserId()));
+        else return jsonResult.setStatus(1).setMessage("Is not connected");
     }
 
     // 基于Cookie判断登录状态
     @CrossOrigin(allowCredentials="true")
     @GetMapping(path = "/islogined")
     JsonResult isLoginedI(HttpServletRequest req){
-        return isLogined(req);
+        Cookie[] cookies = req.getCookies();
+        JsonResult jsonResult = new JsonResult();
+        if (req.getCookies() != null) {
+            for (Cookie cookie : req.getCookies()) {
+                if (cookie.getName().equals("user")) {
+                    User user = userService.selectUserByUserName(cookie.getValue());
+                    req.getSession().setAttribute("user",user);
+                    return jsonResult.setStatus(0).setMessage("Is logined");
+                }
+            }
+        }
+        return jsonResult.setStatus(1).setMessage("Is not logined");
     }
 
     @CrossOrigin(allowCredentials="true")
@@ -88,12 +91,6 @@ public class UserController {
         if(map.isEmpty()){
             return jsonResult.setMessage("Parameter is null").setStatus(1);
         }
-
-//        // 判断是否已经登录
-//        HttpSession session = req.getSession();
-//        if(session.getAttribute("user") != null){
-//            return jsonResult.setMessage("You are logged in, please log out first").setStatus(2);
-//        }
 
         // 帐号与密码匹配
         User userByUP = userService.getUserByUP(new User((String)map.get("username"),(String)map.get("password")));
@@ -204,7 +201,7 @@ public class UserController {
     // 退出登录
     @CrossOrigin(allowCredentials = "true")
     @PostMapping(path = "/logout", consumes = "application/json")
-    JsonResult logout(HttpServletRequest req, HttpServletResponse resp) {
+    JsonResult logout(HttpServletRequest req, HttpServletResponse resp) throws IllegalAccessException {
 
         JsonResult isCon =  isConnected(req);
         if(isCon.getStatus() != 0){
@@ -221,25 +218,7 @@ public class UserController {
     }
 
 
-    JsonResult isConnected(HttpServletRequest req){
-        System.out.println("isConnected:"+req.getRequestURL());
-        HttpSession session = req.getSession();
-        JsonResult jsonResult = new JsonResult();
-        if (session.getAttribute("user")!=null) return jsonResult.setStatus(0).setMessage("Is connected");
-        else return jsonResult.setStatus(1).setMessage("Is not connected");
-    }
 
-    JsonResult isLogined(HttpServletRequest req){
-        System.out.println("isLogined:"+req.getRequestURL());
-        Cookie[] cookies = req.getCookies();
-        JsonResult jsonResult = new JsonResult();
-        if (req.getCookies() != null) {
-            for (Cookie cookie : req.getCookies()) {
-                if (cookie.getName().equals("user")) return jsonResult.setStatus(0).setMessage("Is logined");
-            }
-        }
-        return jsonResult.setStatus(1).setMessage("Is not logined");
-    }
 
     JsonResult isExist(String username){
         User userByName = userService.getUserByName(username);

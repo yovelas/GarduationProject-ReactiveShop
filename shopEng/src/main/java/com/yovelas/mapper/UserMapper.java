@@ -51,17 +51,17 @@ public interface UserMapper {
             @Result(property = "createTime",column = "create_time")})
     List<UserContact> selectUserContactsByUserId(@Param("userId") int userId);
 
-    @Select("SELECT o.order_id, o.goods_id, o.goods_data_id, o.order_status, o.user_contact\n" +
+    @Select("SELECT o.order_id, o.goods_id, o.goods_data_id, o.order_status, o.user_contact_id\n" +
             "\t, shopping_num\n" +
             "FROM orders o\n" +
             "WHERE o.user_id = #{userId};")
     @Results({
             @Result(property = "orderId",column = "order_id"),
             @Result(property = "goodsId",column = "goods_id"),
-            @Result(property = "goodsDataId",column = "goodsDataId"),
+            @Result(property = "goodsDataId",column = "goods_data_id"),
             @Result(property = "orderStatus",column = "order_status"),
-            @Result(property = "userContact",column = "userContact"),
-            @Result(property = "shoppingNum",column = "shoppingNum"),
+            @Result(property = "userContactId",column = "user_contact_id"),
+            @Result(property = "shoppingNum",column = "shopping_num"),
             @Result(property = "createTime",column = "create_time")})
     List<Order> selectUserOrdersByUserId(@Param("userId") int userId);
 

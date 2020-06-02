@@ -34,4 +34,8 @@ public class OrderService {
         return result;
     }
 
+    public int insertOneUserOrders(Order order) {
+        return orderDao.insertOneUserOrders(order);
+    }
+
 }

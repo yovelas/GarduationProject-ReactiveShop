@@ -70,4 +70,9 @@ public class GoodsDao {
     public GoodsData selectGoodsDataById(int id){
         return sqlSession.selectOne("com.yovelas.mapper.GoodsMapper.selectGoodsDataById", id);
     }
+
+    public List<GoodsData> selectGoodsDataByGoodsId(int goodsid){
+        return sqlSession.selectList("com.yovelas.mapper.GoodsMapper.selectGoodsDataByGoodsId", goodsid);
+    }
+
 }

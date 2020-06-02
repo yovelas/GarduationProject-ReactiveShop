@@ -13,12 +13,12 @@ public interface GoodsMapper {
             "\t, (\n" +
             "\t\tSELECT Concat(MIN(goods_price), '-', MAX(goods_price))\n" +
             "\t\tFROM goods_data\n" +
-            "\t\tWHERE goods_id = 1\n" +
+            "\t\tWHERE goods_id = g.goods_id\n" +
             "\t) AS goods_price\n" +
             "\t, (\n" +
             "\t\tSELECT SUM(goods_inventory)\n" +
             "\t\tFROM goods_data\n" +
-            "\t\tWHERE goods_id = 1\n" +
+            "\t\tWHERE goods_id = g.goods_id}\n" +
             "\t) AS goods_inventory\n" +
             "FROM goods g\n" +
             "ORDER BY g.goods_id;")
@@ -39,12 +39,12 @@ public interface GoodsMapper {
             "\t, (\n" +
             "\t\tSELECT Concat(MIN(goods_price), '-', MAX(goods_price))\n" +
             "\t\tFROM goods_data\n" +
-            "\t\tWHERE goods_id = 1\n" +
+            "\t\tWHERE goods_id = g.goods_id\n" +
             "\t) AS goods_price\n" +
             "\t, (\n" +
             "\t\tSELECT SUM(goods_inventory)\n" +
             "\t\tFROM goods_data\n" +
-            "\t\tWHERE goods_id = 1\n" +
+            "\t\tWHERE goods_id = g.goods_id\n" +
             "\t) AS goods_inventory\n" +
             "FROM goods g\n" +
             "ORDER BY rand()\n" +
@@ -66,12 +66,12 @@ public interface GoodsMapper {
             "\t, (\n" +
             "\t\tSELECT Concat(MIN(goods_price), '-', MAX(goods_price))\n" +
             "\t\tFROM goods_data\n" +
-            "\t\tWHERE goods_id = 1\n" +
+            "\t\tWHERE goods_id = g.goods_id\n" +
             "\t) AS goods_price\n" +
             "\t, (\n" +
             "\t\tSELECT SUM(goods_inventory)\n" +
             "\t\tFROM goods_data\n" +
-            "\t\tWHERE goods_id = 1\n" +
+            "\t\tWHERE goods_id = g.goods_id\n" +
             "\t) AS goods_inventory\n" +
             "FROM goods g\n" +
             "\tJOIN goods_sub_type s ON g.goods_type_id = goods_sub_type_id\n" +
@@ -99,12 +99,12 @@ public interface GoodsMapper {
             "\t, (\n" +
             "\t\tSELECT Concat(MIN(goods_price), '-', MAX(goods_price))\n" +
             "\t\tFROM goods_data\n" +
-            "\t\tWHERE goods_id = 1\n" +
+            "\t\tWHERE goods_id = g.goods_id\n" +
             "\t) AS goods_price\n" +
             "\t, (\n" +
             "\t\tSELECT SUM(goods_inventory)\n" +
             "\t\tFROM goods_data\n" +
-            "\t\tWHERE goods_id = 1\n" +
+            "\t\tWHERE goods_id = g.goods_id\n" +
             "\t) AS goods_inventory\n" +
             "FROM goods g\n" +
             "WHERE g.goods_id = #{goodsId};")
@@ -125,12 +125,12 @@ public interface GoodsMapper {
             "\t, (\n" +
             "\t\tSELECT Concat(MIN(goods_price), '-', MAX(goods_price))\n" +
             "\t\tFROM goods_data\n" +
-            "\t\tWHERE goods_id = 1\n" +
+            "\t\tWHERE goods_id = g.goods_id\n" +
             "\t) AS goods_price\n" +
             "\t, (\n" +
             "\t\tSELECT SUM(goods_inventory)\n" +
             "\t\tFROM goods_data\n" +
-            "\t\tWHERE goods_id = 1\n" +
+            "\t\tWHERE goods_id = g.goods_id\n" +
             "\t) AS goods_inventory\n" +
             "FROM goods g\n" +
             "WHERE g.goods_type_id = #{goodsSubTypeId};")
@@ -220,9 +220,20 @@ public interface GoodsMapper {
             "WHERE id = #{id}")
     @Results({
             @Result(property = "id",column = "id"),
+            @Result(property = "goodsId",column = "goods_id"),
             @Result(property = "goodsConfiguration",column = "goods_configuration"),
             @Result(property = "goodsPrice",column = "goods_price"),
             @Result(property = "goodsInventory",column = "goods_inventory")})
     GoodsData selectGoodsDataById(@Param("id") int id);
 
+    @Select("SELECT *\n" +
+            "FROM goods_data\n" +
+            "WHERE goods_id = #{goodsId}")
+    @Results({
+            @Result(property = "id",column = "id"),
+            @Result(property = "goodsId",column = "goods_id"),
+            @Result(property = "goodsConfiguration",column = "goods_configuration"),
+            @Result(property = "goodsPrice",column = "goods_price"),
+            @Result(property = "goodsInventory",column = "goods_inventory")})
+    List<GoodsData> selectGoodsDataByGoodsId(@Param("goodsId") int goodsId);
 }

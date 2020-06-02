@@ -15,7 +15,7 @@ public class Order {
     private int goodsId;
     private int goodsDataId;
     private int orderStatus;
-    private int userContact;
+    private int userContactId;
     private int shoppingNum;
     private String createTime;
 }

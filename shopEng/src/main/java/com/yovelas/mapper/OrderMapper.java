@@ -25,5 +25,13 @@ public interface OrderMapper {
             @Result(property = "createTime",column = "create_time")})
     List<Order> selectUserOrdersByUserId(@Param("userId") int userId);
 
+    @Insert("INSERT INTO orders\n" +
+            "VALUES (NULL, #{userId}, #{goodsId}, #{goodsDataId}, #{orderStatus}\n" +
+            "\t, #{userContactId}, #{shoppingNum}, now());;")
+    int insertOneUserOrders(@Param("userId") int userId,
+                                    @Param("goodsId") int goodsId,
+                                    @Param("goodsDataId") int goodsDataId,
+                                    @Param("orderStatus") int orderStatus,
+                                    @Param("userContactId") int userContactId);
 
 }

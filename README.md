@@ -16,7 +16,14 @@
 ]
 ```
 
+# Doc
 
+
+
+- [Database Script](../doc/DatabaseScript.md)
+- [SQL Statement](../doc/SQLStatement.md)
+- [Test Data](../doc/TestData.md)
+- [SQL with Mapper](../doc/SQLwithMapper.md)
 
 # DOME
 
@@ -161,11 +168,22 @@ CREATE TABLE orders (
 	goods_id int NOT NULL COMMENT '商品ID',
 	goods_data_id int NOT NULL COMMENT '商品信息',
 	order_status int NOT NULL COMMENT '状态,0=取消交易,1=待付款,2=待发货,3=待收货,4=待评论,5=完成交易',
-	user_contact int NOT NULL COMMENT '用户联系方式',
+	user_contact_id int NOT NULL COMMENT '用户联系方式',
 	shopping_num int NOT NULL COMMENT '购买数量',
 	create_time datetime NOT NULL COMMENT '下单时间'
 );
 ```
+
+用户ID、商品ID、商品信息、状态、用户联系方式ID、购买数量、下单时间
+
+立即购买- 待付款
+
+```sql
+INSERT INTO orders
+VALUES (NULL, #{userId}, #{goodsId}, #{goodsDataId}, #{orderStatus}
+	, #{userContactId}, #{shoppingNum}, now());
+```
+
 
 ```sql
 insert into orders values(1, 1, 1, 1, 1, 1, 3, now());
@@ -209,9 +227,10 @@ CREATE TABLE users_track (
 CREATE TABLE users_contact (
 	user_contact_id int PRIMARY KEY AUTO_INCREMENT COMMENT '用户地址ID',
 	user_id int not null COMMENT '用户ID',
-	user_phone varchar(50) NOT NULL COMMENT '浏览商品',
-	user_email varchar(50) NOT NULL COMMENT '浏览商品',
-	user_address varchar(500) NOT NULL COMMENT '浏览商品',
+	user_actual_name varchar(50) NOT NULL COMMENT '用户收件人',
+	user_phone varchar(50) NOT NULL COMMENT '用户电话',
+	user_email varchar(50) NOT NULL COMMENT '用户邮箱',
+	user_address varchar(500) NOT NULL COMMENT '用户详情地址',
 	create_time datetime NOT NULL COMMENT '用户密码'
 );
 ```
@@ -624,8 +643,6 @@ INSERT INTO `goods` VALUES
 UNLOCK TABLES;
 ```
 
-
-
 ```sql
 LOCK TABLES `goods_parameter` WRITE;
 INSERT INTO `goods_parameter` VALUES 
@@ -741,13 +758,49 @@ UNLOCK TABLES;
 LOCK TABLES `goods_data` WRITE;
 INSERT INTO `goods_data` VALUES 
   (1,1,'{1:1,2:4}',340,30),
-  (2,1,'{1:2,2:4}',342,30),
-  (3,1,'{1:3,2:4}',344,30),
-  (4,1,'{1:1,2:5}',345,30),
-  (5,1,'{1:2,2:5}',348,30),
-  (6,1,'{1:3,2:5}',349,30),
-  (7,1,'{1:1,2:6}',352,30),
-  (8,1,'{1:2,2:6}',356,30),
+  (2,1,'{1:2,2:4}',342,34),
+  (3,1,'{1:3,2:4}',344,38),
+  (4,1,'{1:1,2:5}',345,39),
+  (5,1,'{1:2,2:5}',348,32),
+  (6,1,'{1:3,2:5}',349,37),
+  (7,1,'{1:1,2:6}',352,33),
+  (8,1,'{1:2,2:6}',356,36),
+  (9,2,'{3:7,4:16}',126,68),
+  (10,2,'{3:8,4:16}',123,69),
+  (12,2,'{3:9,4:16}',124,67),
+  (13,2,'{3:10,4:16}',156,66),
+  (14,2,'{3:11,4:16}',176,65),
+  (15,2,'{3:12,4:16}',196,64),
+  (16,2,'{3:13,4:16}',166,63),
+  (18,2,'{3:14,4:16}',186,62),
+  (19,2,'{3:15,4:16}',127,61),
+  (21,2,'{3:7,4:17}',122,60),
+  (22,2,'{3:8,4:17}',121,59),
+  (23,2,'{3:9,4:17}',189,58),
+  (24,2,'{3:10,4:17}',192,57),
+  (25,2,'{3:11,4:17}',137,56),
+  (26,2,'{3:12,4:17}',146,55),
+  (27,2,'{3:13,4:17}',156,54),
+  (28,2,'{3:14,4:17}',143,53),
+  (29,2,'{3:15,4:17}',145,52),
+  (30,2,'{3:7,4:18}',141,51),
+  (31,2,'{3:8,4:18}',131,50),
+  (32,2,'{3:9,4:18}',139,49),
+  (33,2,'{3:10,4:18}',134,48),
+  (34,2,'{3:11,4:18}',176,47),
+  (35,2,'{3:12,4:18}',177,46),
+  (36,2,'{3:13,4:18}',173,45),
+  (37,2,'{3:14,4:18}',174,44),
+  (38,2,'{3:15,4:18}',171,43),
+  (39,2,'{3:7,4:19}',170,42),
+  (40,2,'{3:8,4:19}',130,41),
+  (41,2,'{3:9,4:19}',140,40),
+  (42,2,'{3:10,4:19}',146,39),
+  (43,2,'{3:11,4:19}',150,38),
+  (44,2,'{3:12,4:19}',151,37),
+  (45,2,'{3:13,4:19}',155,36),
+  (46,2,'{3:14,4:19}',165,35),
+  (47,2,'{3:15,4:19}',175,34);
 UNLOCK TABLES;
 ```
 
@@ -1098,17 +1151,12 @@ insert into shopping values
 ## 用户
 
 ```sql
-INSERT INTO users
-VALUES (1, 'hari', '托马斯小小买家', '1231', 'users-hari.jpg'
-		, now()),
-	(2, 'calvin', '葛东琪的小毛驴', '1232', 'users-calvin.jpg'
-		, now()),
-	(3, 'jon', '旺仔小乔', '1233', 'users-jon.png'
-		, now()),
-	(4, 'kenda', '毛病陈同学', '1234', 'users-kenda.jpg'
-		, now()),
-	(5, 'lost', '三哈小杜', '1235', 'users-lost.jpg'
-		, now());
+INSERT INTO users VALUES 
+  (1, 'hari', '托马斯小小买家', '1231', 'users-hari.jpg', now()),
+	(2, 'calvin', '葛东琪的小毛驴', '1232', 'users-calvin.jpg', now()),
+	(3, 'jon', '旺仔小乔', '1233', 'users-jon.png', now()),
+	(4, 'kenda', '毛病陈同学', '1234', 'users-kenda.jpg', now()),
+	(5, 'lost', '三哈小杜', '1235', 'users-lost.jpg', now());
 
 INSERT INTO users_track
 VALUES (1, 1, 1, now());
@@ -1116,7 +1164,9 @@ VALUES (1, 1, 1, now());
 INSERT INTO users_track
 VALUES (2, 1, 2, now());
 
-INSERT INTO users_contact
-VALUES (1, 1, '17679391061', 'yovelas@163.com', '广东省广州市天河区珠吉路'
-	, now());
+INSERT INTO users_contact VALUES 
+  (1, 1, '隔小哈', '17679391061', 'yovelas@163.com', '广东省广州市天河区珠吉路', now()),
+  (2, 1, '孟小婉', '12479301861', 'wovelss@163.com', '广东省佛山市南沙区南沙路文艺街', now()),
+  (3, 1, '壁病杜', '1699791061', 'povelrs@163.com', '广东省珠海市香港州区情侣路海滩北街', now());
+
 ```

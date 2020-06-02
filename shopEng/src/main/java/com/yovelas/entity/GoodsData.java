@@ -11,6 +11,7 @@ import lombok.ToString;
 @ToString
 public class GoodsData {
     private int Id;
+    private int goodsId;
     private String goodsConfiguration;
     private Double goodsPrice;
     private int goodsInventory;
