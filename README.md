@@ -1,9 +1,9 @@
 # Document INDEX
 
-- [Database Script](./doc/DatabaseScript)
-- [SQL Statement](./doc/SQLStatement)
-- [Test Data](./doc/TestData)
-- [SQL with Mapper](./doc/SQLwithMapper)
+- [Database Script](./doc/DatabaseScript.md)
+- [SQL Statement](./doc/SQLStatement.md)
+- [Test Data](./doc/TestData.md)
+- [SQL with Mapper](./doc/SQLwithMapper.md)
 
 
 # 前端数据
