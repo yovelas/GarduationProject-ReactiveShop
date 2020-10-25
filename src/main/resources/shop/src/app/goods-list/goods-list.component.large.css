@@ -1,0 +1,108 @@
+section{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+}
+article{
+    width: 200px;
+    border: #eee solid 1px;
+    font-size: 18px;
+    margin: 0 auto 10px;
+    border-radius: 5px;
+}
+article img{
+    width: 100%;
+    margin-bottom: 5px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+article p{
+    float: left;
+    width: 100%;
+    padding: 0 5px 10px 5px;
+    font-size: 14px;
+}
+article p:nth-of-type(3){
+    display: none;
+}
+article p:nth-of-type(1){
+    font-weight: 700;
+    padding-bottom: 0;
+    color: #f40;
+    padding: 0 5px 10px 5px;
+    font-size: 14px;
+}
+article p:nth-of-type(2){
+    padding: 0 5px 10px 5px;
+    font-size: 14px;
+    font-weight: 400;
+}
+
+@media (max-width: 800px) {
+    section{
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+    } 
+    article{
+        width: 180px;
+    }
+}
+@media (max-width: 740px) {
+    section{
+        grid-template-columns: 1fr 1fr 1fr;
+    } 
+    article{
+        width: 200px;
+    }
+}
+@media (max-width: 620px) {
+    section{
+        grid-template-columns: 1fr 1fr 1fr;
+    } 
+    article{
+        width: 180px;
+    }
+}
+@media (max-width: 550px) {
+    section{
+        grid-template-columns: 1fr 1fr;
+    } 
+    article{
+        width: 200px;
+    }
+}
+@media (max-width: 400px) {
+    section{
+        grid-template-columns: 1fr 1fr;
+    } 
+    article{
+        width: 180px;
+    }
+}
+@media (max-width: 370px) {
+    section{
+        grid-template-columns: 1fr;
+    } 
+    article{
+        width: calc(100% - 10px);
+        margin: 5px;
+    }
+    article img{
+        width: 80px;
+        border-top-left-radius: 5px;
+        border-bottom-left-radius: 5px;
+        border-top-right-radius: 0;
+        margin-bottom: 0;
+        float: left;
+    }
+    article p{
+        float: left;
+        width: calc(100% - 90px);
+        padding-left: 10px;
+        /* 当屏幕最小的时候字不会溢出 */
+        line-height: 1.5rem; 
+        height: 1.5rem;
+        overflow: hidden;
+    }
+    article p:nth-of-type(1){
+        padding-top: 6px;
+    }
+}

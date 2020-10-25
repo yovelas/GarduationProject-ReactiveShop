@@ -1,0 +1,48 @@
+p{
+    padding: 0;
+    margin: 0;
+}
+a{
+    z-index: 999;
+}
+nav ul{
+    padding: 0;
+    margin: 0;
+    background: #efffdb;
+    margin-bottom: 10px;
+}
+nav li{
+    list-style:none;
+    display: inline-block;
+    padding: 5px 15px;
+    line-height: 34px;
+}
+nav li:nth-of-type(5),
+nav li:nth-of-type(6){
+    float: right;
+    padding-right: 12px;
+}
+
+
+@media (max-width: 400px) {
+    nav li{
+        padding: 5px 10px;
+        line-height: 34px;
+    }
+    nav li:nth-of-type(5),
+    nav li:nth-of-type(6){
+        float: right;
+        padding-right: 12px;
+    }
+}
+@media (max-width: 370px) {
+    nav li{
+        padding: 5px 6px;
+        line-height: 34px;
+    }
+    nav li:nth-of-type(5),
+    nav li:nth-of-type(6){
+        float: right;
+        padding-right: 12px;
+    }
+}

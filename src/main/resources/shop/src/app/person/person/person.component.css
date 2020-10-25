@@ -1,0 +1,247 @@
+#top {
+    height: 200px;
+    /* background-color: thistle; */
+    position: relative;
+}
+#top i{
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 20px;
+}
+#top img{
+    height: 120px;
+    width: 120px;
+    border-radius: 50%;
+    margin: 30px 20px 0 30px;
+    float: left;
+}
+#info{
+    float: left;
+    width: calc(100% - 170px);
+    margin-top: 10px;
+}
+#top span{
+    font-size: 35px;
+    display: inline-block;
+    padding-top: 35px;
+    margin-left: 30px;
+}
+#list ul{
+    display:inline-block;
+    width: 100px;
+    padding: 0;
+    margin: 0;
+    text-align: center;
+}
+#list li{
+    display:block;
+}
+
+#card{
+    /* height: 500px; */
+    /* background: tomato; */
+}
+
+#card>div{
+    background: rgb(243, 240, 240);
+    height: 320px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    border: #dffabe solid 2px;
+}
+
+#card div p{
+    background: #dffabe;
+    line-height:35px;
+    padding: 0 10px;
+    margin: 0;
+}
+#card div i:nth-of-type(2) {
+    float: right;
+    line-height: 35px;
+}
+.content{
+    width: 100%;
+    overflow-x: scroll;
+}
+.content section{
+    height: 100%;
+    overflow-x: auto;
+    overflow-y: auto;
+    min-width: 550%;
+}
+.content article {
+    width: 180px;
+    margin: 10px;
+    border:#eee solid 2px;
+    background: white;
+    padding: 15px;
+    border-radius: 5px;
+    display: inline-block;
+    /* float: left; */
+}
+.content article img{
+    width: 100%;
+    margin-bottom: 5px;
+}
+.content article span:nth-of-type(1){
+    display: inline-block;
+    line-height: 1.2rem;
+    max-height: 2.4rem;
+    font-size: 1rem;
+    overflow: hidden;
+}
+.content article span:nth-of-type(2),
+.content article span:nth-of-type(3)
+{
+    display: inline-block;
+    padding: 1px 5px;
+    border: #dffabe solid 2px;
+    border-radius: 20px;
+    float: right;
+}
+.content article span:nth-of-type(2){
+    background: #f40;
+    border: #f40 solid 2px;
+    margin-left: 5px;
+
+}
+
+@media (max-width: 960px) {
+    #top{
+        height: 170px;
+    }    
+    #top img{
+        height: 100px;
+        width: 100px;
+        border-radius: 50%;
+        margin: 15px 10px 0 25px;
+        float: left;
+    }
+    #info{
+        float: left;
+        width: 100%;
+        margin-top: 5px;
+        padding-left: 125px;
+        position: relative;
+        top: -25px;
+    }
+    #top span{
+        font-size: 25px;
+        margin-left: 15px;
+    }
+    #list ul{
+        display:inline-block;
+        width: 70px;
+        padding: 0;
+        margin: 0;
+        text-align: center;
+    }
+    #list li{
+        display:block;
+        font-size: 14px;
+    }
+    #card{
+        padding: 0 8px;
+    }
+}
+@media (max-width: 680px) {
+}
+
+@media (max-width: 450px) {
+    #top{
+        height: 130px;
+    }    
+    #top img{
+        height: 80px;
+        width: 80px;
+        border-radius: 50%;
+        margin: 10px 10px 0 20px;
+        float: left;
+    }
+    #info{
+        float: left;
+        width: 100%;
+        margin-top: 5px;
+        padding-left: 90px;
+        position: relative;
+        top: -25px;
+    }
+    #top span{
+        font-size: 20px;
+        margin-left: 10px;
+    }
+    #list ul{
+        display:inline-block;
+        width: 70px;
+        padding: 0;
+        margin: 0;
+        text-align: center;
+    }
+    #list li{
+        display:block;
+        font-size: 14px;
+    }
+
+ .content{
+    width: 100%;
+    /* overflow-x: unset; */
+    overflow: auto;
+    height: calc(100% - 41px);
+}
+.content section{
+    height: 130%;
+    overflow: auto;
+    min-width: 100%;
+}
+.content article {
+    width: calc(100% - 10px);
+    height: 120px;
+    margin: 5px 5px 0;
+    border:none;
+    background: white;
+    padding: 15px;
+    border-radius: 5px;
+    display: inline-block;
+}
+.content article img{
+    width: 80px;
+    margin-bottom: 5px;
+}
+.content article span:nth-of-type(1){
+    display: inline-block;
+    width: calc(100% - 90px);
+    line-height: 1.2rem;
+    max-height: 2.4rem;
+    font-size: 1rem;
+    overflow: hidden;
+}
+.content article span:nth-of-type(2),
+.content article span:nth-of-type(3)
+{
+    display: inline-block;
+    padding: 1px 5px;
+    border: #dffabe solid 2px;
+    border-radius: 20px;
+    float: right;
+    position: relative;
+    top: -24px;
+}
+.content article span:nth-of-type(2){
+    background: #f40;
+    border: #f40 solid 2px;
+    margin-left: 5px;
+
+}   
+#card>div#deliver,
+#card>div#receive,
+#card>div#after {
+    height: 40px;
+}
+#deliver .content,
+#receive .content,
+#after .content{
+    display: none;
+}
+}

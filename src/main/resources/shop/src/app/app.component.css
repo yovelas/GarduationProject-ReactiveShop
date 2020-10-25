@@ -1,0 +1,25 @@
+#appcontainer {
+  width: 960px;
+  margin: 0 auto;
+  padding: 0;
+}
+
+/* 响应式设计 */
+/* 设置三个断点分别为：屏幕宽度大于1200，小于960，小于767 */
+@media (min-width: 1200px) {
+  #appcontainer {
+    width: 1170px;
+  }
+}
+
+@media (max-width: 959px) {
+  #appcontainer {
+    width: 100%;
+  }
+}
+
+@media (max-width: 767px) {
+  #appcontainer {
+    width: 100%;
+  }
+}

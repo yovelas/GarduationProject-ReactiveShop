@@ -1,0 +1,94 @@
+ul,li{
+  padding: 0;
+  margin: 0;
+  display: inline;
+}
+/* 导航 */
+#nav {
+  margin-bottom: 15px;
+  /* float: left; */
+}
+
+/* 导航菜单 */
+#nav li,
+#nav li a {
+  display: inline-block;
+  padding: 7px 15px;
+  text-decoration: none;
+  color: #3b3b3b;
+  line-height: 25px;
+  /* color: #999; */
+}
+#nav li a:hover {
+  background: #eee;
+}
+#nav .active {
+  background: #eee;
+}
+
+#search{
+  float: right;
+  position: relative;
+}
+
+#searchtext{
+  width: 250px;
+  border-radius: 20px;
+  border: #dffabe solid 2px;
+  padding-right: 65px;
+  padding-left: 8px;
+}
+#searchtext,
+#searchbutton{
+  height: 36px;
+  outline: none;
+  margin: 8.5px 0;
+
+}
+#searchbutton{
+  position: absolute;
+  right: 0px;
+  width: 60px;
+  background: #dffabe;
+  border: none;
+  border-top-right-radius: 25px;
+  border-bottom-right-radius: 25px;
+}
+
+.toggle-btn{
+  display: none;
+}
+
+/* Media Queries */
+@media (max-width: 760px) {
+  #nav li,
+  #nav li a {
+    padding: 7px 8px; 
+  }
+}
+
+@media (max-width: 620px) {
+  #nav li,
+  #nav li a {
+    padding: 7px 12px; 
+  }
+  #search{
+   padding:0 12px;
+    float: none;
+  }
+  #searchtext{
+    width: 100%;
+  }
+  #searchbutton{
+    right: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  #nav ul{
+    display: none;
+  }
+  /* .toggle-btn{
+    display: inline;
+  } */
+}

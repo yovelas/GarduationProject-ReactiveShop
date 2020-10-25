@@ -1,0 +1,162 @@
+h3 {
+  padding: 20px;
+}
+
+
+#mainbody,
+#sidebar {
+  /* height: 100px; */
+  line-height: 25px;
+  background: #eee;
+  padding-bottom: 20px;
+  margin: 20px 0;
+  float: left;
+}
+#mainbody {
+  width: 620px;
+  margin-right: 20px;
+  background: #f2f7ec;
+  padding-bottom: 20px;
+}
+#sidebar {
+  width: 320px;
+  background: #fde0ea;
+}
+#mainContent{
+  display: grid;
+  /* flex-direction: row; */
+  /* flex-wrap: wrap; */
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+#sideContent{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+#sideContent article img,
+#mainContent article img{
+  width: 150px;
+  height: 150px;
+}
+
+#sideContent article p,
+#mainContent article p{
+  width: 160px;
+  text-overflow:ellipsis; 
+  height: 1.5rem;
+  font-size: 0.9rem;
+  padding: 0 7px;
+  margin: 0 auto;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+#sideContent article p:nth-of-type(2),
+#mainContent article p:nth-of-type(2){
+  color: gray;
+}
+
+#sideContent article,
+#mainContent article{
+  text-align: center;
+  width: 160px;
+  flex: 1 160px;
+  margin: 0 auto;
+}
+
+/* 响应式设计 */
+/* 设置三个断点分别为：屏幕宽度大于1200，小于960，小于767 */
+@media (min-width: 1200px) {
+  #mainbody {
+    width: 770px;
+    margin-right: 20px;
+  }
+  #sidebar {
+    width: 380px;
+  }
+}
+@media (max-width: 1200px) {
+  #mainbody {
+    width: 72%;
+  }
+  #mainContent{
+  grid-template-columns: 1fr 1fr 1fr;
+  }
+  #sideContent{
+    grid-template-columns: 1fr;
+  }
+  #sidebar article:nth-of-type(3),
+  #sidebar article:nth-of-type(4),
+  #mainbody article:nth-of-type(7),
+  #mainbody article:nth-of-type(8) {
+    display: none;
+  }
+  #sidebar {
+    width: 25%;
+    float: right;
+  }
+}
+@media (max-width: 959px) {
+  /* #mainbody {
+    width: 67%;
+  }
+  #sidebar {
+    width: 30%;
+    float: right;
+  } */
+}
+
+@media (max-width: 767px) {
+  #mainbody,
+  #sidebar {
+    float: none;
+    width: 100%;
+  }
+  #mainContent{
+  grid-template-columns: 1fr 1fr 1fr;
+  }
+  #sideContent{
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+  #sidebar article:nth-of-type(3){
+    display: block;
+  }
+}
+@media (max-width: 480px) {
+  #mainbody,
+  #sidebar {
+    float: none;
+    width: 100%;
+  }
+  #mainContent{
+  grid-template-columns: 1fr 1fr;
+  }
+  #sideContent{
+    grid-template-columns: 1fr 1fr;
+  }
+  #sidebar article:nth-of-type(3),
+  #sidebar article:nth-of-type(4),
+  #mainbody article:nth-of-type(7),
+  #mainbody article:nth-of-type(8) {
+    display: block;
+  }
+}
+
+@media (max-width: 320px) {
+  #mainbody,
+  #sidebar {
+    float: none;
+    width: 100%;
+  }
+  #mainContent{
+  grid-template-columns: 1fr;
+  }
+  #sideContent{
+    grid-template-columns: 1fr;
+  }
+  #sidebar article:nth-of-type(3),
+  #sidebar article:nth-of-type(4),
+  #mainbody article:nth-of-type(7),
+  #mainbody article:nth-of-type(8) {
+    display: block;
+  }
+}

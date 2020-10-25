@@ -1,0 +1,6 @@
+/* Media Queries */
+@media (max-width: 467px) {
+    .control{
+        display: none;
+    }
+}

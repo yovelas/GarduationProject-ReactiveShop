@@ -1,0 +1,105 @@
+#info{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 15px;
+}
+
+#info article{
+    background: lightgray;
+    padding: 10px;
+    position: relative;
+}
+
+#info article p{
+    margin: 0;
+    padding: 0;
+    margin-top: 5px;
+}
+#info article p:nth-of-type(1){
+    font-weight: 500;
+}
+
+#info article i{
+    background: red;
+    color: white;
+    width: 40px;
+    height: 40px;
+    line-height: 50px;
+    /* text-align: center; */
+    padding-left: 15px;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    border-top-left-radius: 90px;
+}
+
+#goods article {
+    width: 100%;
+    margin: 10px 0;
+    border:#eee solid 2px;
+    background: white;
+    padding: 5px;
+    border-radius: 5px;
+    display: inline-block;
+    position: relative;
+}
+#goods article img{
+    width: 150px;
+    margin-bottom: 5px;
+    float: left;
+}
+#goods article .info{
+    margin-left: 20px;
+    float: left;
+}
+#goods article .info span{
+    display: block;
+}
+#goods article .info span:nth-of-type(1){
+    font-size: 20px;
+    font-weight: 500;
+    margin-bottom: 8px;
+}
+#goods article .info span:nth-of-type(2),
+#goods article .info span:nth-of-type(3),
+#goods article .info span:nth-of-type(4){
+    line-height: 23px;
+    color: gray;
+    margin-left: 7px;
+}
+#goods article .info input{
+    background: white;
+    border: #eee solid 1px;
+    padding: 0 7px;
+    border-radius: 5px;
+    margin:0 5px;
+}
+#goods article .info .price{
+    color: #f40; 
+    font-size: 20px;
+    margin-top: 8px;
+}
+#oper{
+    position: relative;
+    height: 200px;
+}
+
+#oper article{
+    /* background: thistle; */
+    padding: 10px;
+    width: 450px;
+    text-align: right;
+    position: absolute;
+    right: 0;
+}
+#oper article button{
+    padding: 8px 12px;
+    background: #f40;
+    border: none;
+    color: white;
+}
+#price{
+    color: #f40;
+    font-size: 25px;
+    font-weight: 500;
+}

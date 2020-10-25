@@ -1,0 +1,76 @@
+#left{
+    background: #eee;
+    float: left;
+    width: 22%;
+}
+
+#right{
+    /* background: blanchedalmond; */
+    float: left;
+    width: 78%;
+    min-height: 800px;
+}
+.active{
+  background: white;
+  color:red;
+}
+.list-group-item:hover{
+  background: white;
+  color:red;
+}
+#left button{
+    outline: none;
+}
+
+.list-group-item{
+    background: #f8f8f8;
+    border: none;
+}
+
+#rightContent{
+    padding-top: 20px;
+    display: grid; 
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+}
+#rightContent article{
+    text-align: center;
+}
+
+/* 响应式设计 */
+/* 设置三个断点分别为：屏幕宽度大于1200，小于960，小于767 */
+@media (max-width: 1200px) {
+  #rightContent{
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
+}
+@media (max-width: 800px) {
+  #rightContent{
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+
+@media (max-width: 590px) {
+  #rightContent{
+    grid-template-columns: 1fr 1fr;
+  }
+  .list-group-item{
+      padding-left: 0;
+      padding-right: 0;
+  }
+}
+
+@media (max-width: 450px) {
+
+  #rightContent img{
+      width: 80px;
+      height: 80px;
+}
+  #rightContent{
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+@media (max-width: 320px) {
+  #rightContent{
+    grid-template-columns: 1fr 1fr;
+  }
+}

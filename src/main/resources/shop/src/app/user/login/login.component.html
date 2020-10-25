@@ -1,0 +1,45 @@
+<div id="main_bg">
+    <!-- <div id="main_box"> -->
+        <!-- <div id="main_inbox"> -->
+            <div id="login_content">
+                <h2>Cloud Photography Association</h2>
+                <h1>Sign in</h1>
+                <div class="loginMsg msg"></div>
+                <input class="infoInput" type="email" name="username" placeholder="Email, phone, or Account ID" [(ngModel)]="username">
+                <p class="peakTop">No account? <a>Create one!</a></p>
+                <p>Have a question?<a href="#">Help me!</a></p>
+                <p class="btn login"> <input id="next" type="button" value="Next" (click)="verifyUsername()"> </p>   
+            </div>
+            <div id="password_content">
+                <p><i id="back" class="fa fa-arrow-left" aria-hidden="true" (click)="back()"></i><span>{{username}}</span></p>
+                <h1>Enter password</h1>
+                <div class="passwordMsg msg"></div>
+                <input class="infoInput" type="password" name="password" placeholder="Password" [(ngModel)]="password">
+                <p class="peakTopPassword"><i id="kstatus" [class]="keepClass" aria-hidden="true" (click)="keep()"></i>Keep me signed in</p>
+                <p><a href="#">Forgot password!</a></p>
+                <p><a href="#">Sign in with a security key</a></p>
+                <p class="btn password"> <input type="button" value="Sign In" (click)="verifyPassword()"> </p>
+            </div>
+            <!-- <div id="create_content" *ngIf="createAccountContent">
+                <p (click)="backVerifyUsername()"><i id="back" class="fa fa-arrow-left" aria-hidden="true"  ></i><span id="account">Back to login</span></p>
+                <h1>Create account</h1>
+                <div class="msg">{{errorMessage}}</div>
+                <input type="text" name="newUsername" placeholder="someone@example.com" [(ngModel)]="newUsername" (keydown)="changeHeight()">
+                <p class="peakTop"><a href="#">Use a phone number instead</a></p>
+                <p class="btn create"> <input id="signin" type="button" value="Next" (click)="verifyIsExist()"> </p>
+            </div>
+
+            <div id="create_content1" *ngIf="createPasswordContent">
+                <p (click)="backVerifyUsername()"><i id="back" class="fa fa-arrow-left" aria-hidden="true"  ></i><span id="account">Back to login</span></p>
+                <h1>Create password</h1>
+                <div class="msg">{{errorMessage}}</div>
+                <input type="password" name="newPassword" placeholder="Password" [(ngModel)]="newPassword" (keydown)="changeHeight()">
+                <p class="btn create"> <input id="signin" type="button" value="Confirm" (click)="confirmCreate()"> </p>
+            </div> -->
+
+        <!-- </div>  #main_box Ending -->
+    <!-- </div>  #main_box Ending -->
+</div>  <!--#main_bg Ending-->
+
+<div style="clear: both;"></div>
+

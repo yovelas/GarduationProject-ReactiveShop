@@ -1,0 +1,183 @@
+#picShow{
+    width: 100%;
+    /* background: pink; */
+    float: left;
+    padding-bottom: 10px;
+    border-bottom: #eee solid 2px;
+}
+
+#left{
+    width: 45%;
+    /* background: skyblue; */
+    text-align: center;
+    float: left;
+}
+
+#picList,#mainBox{
+    width: 430px;
+    margin: 0 auto;
+}
+#mainBox img{
+    width: 100%;
+}
+#picList{
+    /* background: antiquewhite; */
+    text-align: left;
+    margin-top: 10px;
+}
+#picList img{
+    margin-right: 10px;
+}
+
+#right{
+    width: calc(55% - 10px);
+    margin-left: 10px;
+    /* background: thistle; */
+    float: left;
+}
+#details{
+    clear: both;
+    background: white;
+}
+#details img{
+    width: 100%;
+}
+
+#right p{
+    font-size: 12px;
+    height: 40px;
+    color: gray;
+}
+#right>p:nth-of-type(1){
+    margin-top: 40px;
+}
+
+#right>p:nth-of-type(1) span{
+    font-size: 26px;
+    color: #F40;
+    font-weight: 700;
+    margin-left: 30px;
+}
+
+#right p span {
+    font-size: 15px;
+    margin-left: 30px;
+    color: black;
+}
+
+select,button{
+    border: #eee solid 1px;
+    border-radius: 5px;
+    margin-right: 5px;
+    outline: none;
+    background: white;
+}
+
+#parameter button{
+    font-size: 15px;
+    font-weight: 400;
+}
+
+
+#amount span button{
+    width: 25px;
+}
+input[name=amount]{
+    width: 30px;
+    padding: 0 5px;
+    margin-right: 5px;
+}
+
+#bay button{
+    height: 35px;
+    padding: 5px 20px;
+    outline: none;
+}
+#bay button:first-of-type{
+    background: #FFE4D0;
+    color: #E5511D;
+    border: #F0CAB6 solid 1px;
+}
+#bay button:nth-of-type(2){
+    background: #F40;
+    color: white;
+    border: #F40 solid 1px;
+}
+
+@media (max-width: 960px) {
+    #picList,#mainBox{
+        width: 380px;
+    }
+    #right p:nth-of-type(1){
+        margin-top: 20px;
+    }
+    #right p{
+        height: 35px;
+    }
+}
+@media (max-width: 840px) {
+    #picList,#mainBox{
+        width: 300px;
+    }
+    #left{
+        width: 50%;
+    }
+    #right{
+        width: calc(50% - 10px);
+    }
+    #right h3{
+        font-size: 18px;
+    }
+    #right p:nth-of-type(1){
+        margin-top: 10px;
+    }
+    #right p{
+        height: 25px;
+        font-size: 10px;
+    }
+    #right p span {
+        font-size: 12px;
+        margin-left: 8px;
+    }
+    #right p:nth-of-type(1) span {
+        font-size: 20px
+    }
+
+}
+@media (max-width: 580px) {
+    #left,#right{
+        float: none;
+        width: 100%;
+        margin: 0;
+    } 
+    #right{
+        padding-top: 10px;
+        padding-left: 10px;
+    }
+    #right h3{
+        font-size: 18px;
+        font-weight: 900;
+    }
+    #right p{
+        height: 35px;
+        font-size: 14px;
+        font-weight: 500;
+    }
+    #right p span{
+        font-size: 16px;
+        font-weight: 600;
+    }
+    #bay button{
+        height: 42px;
+        padding: 10px 25px;
+        margin-right: 10px;
+        outline: none;
+    }
+    #picList{
+        display: none;
+    }
+    #mainBox{
+        width: 100%;
+    }
+
+}

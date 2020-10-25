@@ -1,0 +1,14 @@
+<nav id="nav">
+    <ul>
+        <li><a routerLink="/home" routerLinkActive="active">首页</a></li>
+        <li><a routerLink="/classify" routerLinkActive="active">分类</a></li>
+        <li><a routerLink="/message" routerLinkActive="active">消息</a></li>
+        <li><a routerLink="/car" routerLinkActive="active">购物车</a></li>
+        <li><a routerLink="/person" routerLinkActive="active">个人中心</a></li>
+    </ul>
+    <div id="search">
+        <input id="searchtext" type="text" name="search" placeholder="Search" [(ngModel)]="searchText">
+        <input id="searchbutton" type="button" value="搜索" (click)="search()">
+    </div>
+</nav>
+<div style="clear:both;"></div>
